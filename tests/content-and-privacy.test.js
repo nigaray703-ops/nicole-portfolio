@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { JSDOM } from "jsdom";
 import { describe, expect, it } from "vitest";
 
 const html = readFileSync(resolve("index.html"), "utf8");
@@ -34,5 +35,16 @@ describe("public portfolio contract", () => {
     ["work", "capabilities", "experience", "about", "contact"].forEach((id) => {
       expect(html).toContain(`id="${id}"`);
     });
+  });
+
+  it("keeps case studies readable without JavaScript", () => {
+    const document = new JSDOM(html).window.document;
+    const triggers = document.querySelectorAll("[data-case-trigger]");
+    const panels = document.querySelectorAll("[data-case-panel]");
+
+    expect(triggers).toHaveLength(4);
+    expect(panels).toHaveLength(4);
+    triggers.forEach((trigger) => expect(trigger.hasAttribute("hidden")).toBe(true));
+    panels.forEach((panel) => expect(panel.hasAttribute("hidden")).toBe(false));
   });
 });
