@@ -9,7 +9,12 @@ describe("mobile navigation", () => {
       <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="sr-only">Open navigation</span>
       </button>
-      <nav id="primary-nav"><a href="#work">Work</a></nav>
+      <nav id="primary-nav">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+      </nav>
+      <section id="work" aria-labelledby="work-title"><h2 id="work-title">Work</h2></section>
+      <section id="about" aria-labelledby="about-title"><h2 id="about-title">About</h2></section>
     `;
     cleanup = initMobileNav(document);
   });
@@ -34,6 +39,65 @@ describe("mobile navigation", () => {
     toggle.click();
     document.querySelector("nav a").click();
     expect(toggle.getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("moves focus to the destination heading after selecting from the open menu", async () => {
+    const toggle = document.querySelector(".nav-toggle");
+    const heading = document.querySelector("#work-title");
+    toggle.click();
+
+    document.querySelector('nav a[href="#work"]').click();
+    await Promise.resolve();
+
+    expect(document.activeElement).toBe(heading);
+    expect(heading.getAttribute("tabindex")).toBe("-1");
+    heading.blur();
+    expect(heading.hasAttribute("tabindex")).toBe(false);
+  });
+
+  it("marks the selected section link as the current location", () => {
+    const work = document.querySelector('nav a[href="#work"]');
+    const about = document.querySelector('nav a[href="#about"]');
+
+    work.click();
+    expect(work.getAttribute("aria-current")).toBe("location");
+    expect(work.classList.contains("is-active")).toBe(true);
+    expect(about.hasAttribute("aria-current")).toBe(false);
+
+    about.click();
+    expect(about.getAttribute("aria-current")).toBe("location");
+    expect(work.hasAttribute("aria-current")).toBe(false);
+  });
+
+  it("updates the current link from observed section visibility", () => {
+    cleanup();
+    let observerCallback;
+    let disconnected = false;
+    class MockIntersectionObserver {
+      constructor(callback) {
+        observerCallback = callback;
+      }
+      observe() {}
+      disconnect() {
+        disconnected = true;
+      }
+    }
+    cleanup = initMobileNav(document, MockIntersectionObserver);
+
+    observerCallback([
+      {
+        target: document.querySelector("#about"),
+        isIntersecting: true,
+        intersectionRatio: 0.8,
+      },
+    ]);
+
+    expect(document.querySelector('nav a[href="#about"]').getAttribute("aria-current")).toBe(
+      "location",
+    );
+    cleanup();
+    expect(disconnected).toBe(true);
+    cleanup = () => {};
   });
 
   it("resolves the controlled navigation only inside the supplied root", () => {

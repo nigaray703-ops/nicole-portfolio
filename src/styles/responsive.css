@@ -12,7 +12,8 @@
     min-height: 31rem;
   }
 
-  .hero__portrait img {
+  .hero__portrait img,
+  .portrait-fallback {
     width: min(22rem, 88%);
     height: 28rem;
   }
@@ -58,14 +59,31 @@
     width: min(100% - 1.5rem, var(--content-width));
   }
 
-  .nav-toggle {
+  .site-header {
+    flex-wrap: wrap;
+  }
+
+  #primary-nav {
+    width: 100%;
+    gap: 0;
+    padding-block: 0.5rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .js .site-header {
+    flex-wrap: nowrap;
+  }
+
+  .js .nav-toggle {
     display: inline-grid;
     place-items: center;
     position: relative;
   }
 
-  #primary-nav {
+  .js #primary-nav {
     display: none;
+    width: auto;
     position: absolute;
     left: 0;
     right: 0;
@@ -78,7 +96,7 @@
     backdrop-filter: blur(12px);
   }
 
-  #primary-nav[data-open="true"] {
+  .js #primary-nav[data-open="true"] {
     display: flex;
   }
 
@@ -112,7 +130,8 @@
     right: 1rem;
   }
 
-  .hero__portrait img {
+  .hero__portrait img,
+  .portrait-fallback {
     left: 0;
     right: auto;
     width: min(17rem, 82%);

@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 
 const html = readFileSync(resolve("index.html"), "utf8");
 const componentsCss = readFileSync(resolve("src/styles/components.css"), "utf8");
+const responsiveCss = readFileSync(resolve("src/styles/responsive.css"), "utf8");
+const tokensCss = readFileSync(resolve("src/styles/tokens.css"), "utf8");
 
 describe("public portfolio contract", () => {
   it("contains the approved public identity and role", () => {
@@ -40,6 +42,14 @@ describe("public portfolio contract", () => {
     expect(signalCard.textContent).toContain("Current focus");
     expect(signalCard.textContent).toContain("Research / Process / Product / AI");
     expect(signalCard.querySelector("strong")).toBeNull();
+  });
+
+  it("keeps Current focus text in the accessibility tree", () => {
+    const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+    const signalCard = document.querySelector(".signal-card");
+
+    expect(signalCard.tagName).toBe("ASIDE");
+    expect(signalCard.hasAttribute("aria-hidden")).toBe(false);
   });
 
   it("contains every required page region", () => {
@@ -81,6 +91,26 @@ describe("public portfolio contract", () => {
     expect(componentsCss).toMatch(
       /\.about \.section-label\s*{[^}]*color:\s*var\(--color-mint\);[^}]*font-size:\s*0\.9rem;[^}]*}/s,
     );
+  });
+
+  it("collapses mobile navigation only after JavaScript enhancement", () => {
+    expect(responsiveCss).toMatch(/\.js #primary-nav\s*{[^}]*display:\s*none;/s);
+    expect(responsiveCss).toMatch(/\.js \.nav-toggle\s*{[^}]*display:\s*inline-grid;/s);
+    expect(responsiveCss).not.toMatch(/^\s{2}#primary-nav\s*{[^}]*display:\s*none;/m);
+  });
+
+  it("provides a visible non-color active navigation treatment", () => {
+    expect(componentsCss).toMatch(
+      /#primary-nav a\[aria-current="location"\][^}]*text-decoration-line:\s*underline;/s,
+    );
+  });
+
+  it("uses a privacy-safe explicit system font stack without an unbundled Inter dependency", () => {
+    expect(tokensCss).not.toMatch(/--font-sans:[^;]*\bInter\b/);
+    expect(tokensCss).toContain('"SF Pro Display"');
+    expect(tokensCss).toContain('"Segoe UI Variable"');
+    expect(tokensCss).toContain('"Helvetica Neue"');
+    expect(tokensCss).toContain('"Liberation Sans"');
   });
 
   it("keeps case studies readable without JavaScript", () => {

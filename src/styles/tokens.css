@@ -9,7 +9,9 @@
   --color-mint: #71f0cd;
   --color-line: rgba(116, 203, 245, 0.17);
   --color-focus: #b9f3ff;
-  --font-sans: Inter, "Avenir Next", "Segoe UI", sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Avenir Next", "Segoe UI Variable", "Segoe UI", "Helvetica Neue", Helvetica, Arial,
+    "Liberation Sans", sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --content-width: 1180px;
   --space-section: clamp(5rem, 9vw, 8rem);
