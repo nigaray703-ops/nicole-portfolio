@@ -1,0 +1,152 @@
+@media (max-width: 900px) {
+  .hero,
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding-block: 5rem;
+  }
+
+  .hero__portrait {
+    min-height: 24rem;
+  }
+
+  .project-list {
+    grid-template-columns: 1fr;
+  }
+
+  .project--featured {
+    grid-row: auto;
+    min-height: 26rem;
+  }
+
+  .project--featured h3 {
+    margin-top: 8rem;
+  }
+
+  .capability-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .capability-grid article,
+  .capability-grid article:nth-child(-n + 3),
+  .capability-grid article:nth-child(3n + 1) {
+    border: 1px solid var(--color-line);
+  }
+
+  .about::after {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .site-header,
+  main,
+  footer {
+    width: min(100% - 1.5rem, var(--content-width));
+  }
+
+  .nav-toggle {
+    display: inline-grid;
+    place-items: center;
+    position: relative;
+  }
+
+  #primary-nav {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 1px);
+    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    border: 1px solid var(--color-line);
+    background: rgba(3, 16, 26, 0.97);
+    backdrop-filter: blur(12px);
+  }
+
+  #primary-nav[data-open="true"] {
+    display: flex;
+  }
+
+  #primary-nav a {
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero {
+    min-height: auto;
+    gap: 2rem;
+    padding-block: 4rem;
+    overflow: clip;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 15vw, 4.2rem);
+  }
+
+  .hero__portrait {
+    min-height: 22rem;
+    order: 2;
+  }
+
+  .hero__portrait::before {
+    right: -6rem;
+  }
+
+  .hero__portrait::after {
+    right: 1rem;
+  }
+
+  .hero__portrait img {
+    left: 0;
+    right: auto;
+    width: min(17rem, 82%);
+    height: 20rem;
+  }
+
+  .signal-card {
+    right: 0;
+    bottom: 0;
+  }
+
+  .section-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .capability-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project,
+  .project--featured {
+    min-height: auto;
+  }
+
+  .project h3,
+  .project--featured h3 {
+    margin-top: 4rem;
+  }
+
+  .button,
+  [data-case-trigger],
+  [data-case-close] {
+    min-height: 2.75rem;
+  }
+
+  .contact .button {
+    width: min(100%, 16rem);
+  }
+
+  .contact .button + .button {
+    margin: 0.75rem 0 0;
+  }
+
+  footer {
+    flex-direction: column;
+  }
+}

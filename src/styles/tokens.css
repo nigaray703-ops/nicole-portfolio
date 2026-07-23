@@ -1,0 +1,19 @@
+:root {
+  color-scheme: dark;
+  --color-bg: #03101a;
+  --color-surface: #071b29;
+  --color-surface-raised: #092333;
+  --color-text: #eaf7ff;
+  --color-muted: #8aa8ba;
+  --color-cyan: #53c9ff;
+  --color-mint: #71f0cd;
+  --color-line: rgba(116, 203, 245, 0.17);
+  --color-focus: #b9f3ff;
+  --font-sans: Inter, "Avenir Next", "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --content-width: 1180px;
+  --space-section: clamp(5rem, 9vw, 8rem);
+  --radius-small: 0.5rem;
+  --radius-medium: 0.875rem;
+  --shadow-glow: 0 1.5rem 5rem rgba(18, 110, 158, 0.24);
+}

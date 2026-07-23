@@ -1,0 +1,88 @@
+.site-header,
+main,
+footer {
+  width: min(var(--content-width), calc(100% - 2.75rem));
+  margin-inline: auto;
+}
+
+.site-header {
+  min-height: 4.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-line);
+  position: relative;
+  z-index: 10;
+}
+
+.brand {
+  text-decoration: none;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+#primary-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+#primary-nav a {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.hero {
+  min-height: 38rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.section {
+  padding-block: var(--space-section);
+  border-top: 1px solid var(--color-line);
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 2rem;
+  margin-bottom: 2.75rem;
+}
+
+.project-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 1rem;
+}
+
+.project--featured {
+  grid-row: span 3;
+}
+
+.capability-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.about {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
+.contact {
+  text-align: center;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 2rem;
+  border-top: 1px solid var(--color-line);
+}
