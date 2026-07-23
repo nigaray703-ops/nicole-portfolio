@@ -1,0 +1,6 @@
+node_modules/
+.pnpm-modules/
+dist/
+.DS_Store
+.superpowers/
+.codex-visual-audit/
