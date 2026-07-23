@@ -32,8 +32,8 @@
 }
 
 .hero h1 span {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(129, 218, 255, 0.82);
+  color: var(--color-text);
+  -webkit-text-stroke: 0;
 }
 
 .hero__copy > p {
@@ -94,17 +94,17 @@
 }
 
 .hero__portrait {
-  min-height: 27rem;
+  min-height: 33rem;
   position: relative;
 }
 
 .hero__portrait::before {
   content: "";
   position: absolute;
-  width: 22rem;
-  height: 11rem;
-  right: -1rem;
-  top: 7rem;
+  width: 28rem;
+  height: 15rem;
+  right: -3rem;
+  top: 8rem;
   border: 1px solid rgba(84, 207, 255, 0.34);
   border-radius: 50%;
   transform: rotate(-20deg);
@@ -115,19 +115,19 @@
   width: 0.45rem;
   height: 0.45rem;
   position: absolute;
-  right: 1.35rem;
-  top: 8.2rem;
+  right: 0.75rem;
+  top: 9.5rem;
   border-radius: 50%;
   background: var(--color-mint);
   box-shadow: 0 0 1.4rem rgba(113, 240, 205, 0.8);
 }
 
 .hero__portrait img {
-  width: min(18rem, 82%);
-  height: 22rem;
+  width: min(24rem, 92%);
+  height: 30rem;
   position: absolute;
-  right: 2rem;
-  top: 2rem;
+  right: 0;
+  top: 0;
   object-fit: cover;
   object-position: 50% 18%;
   border: 1px solid rgba(116, 203, 245, 0.25);
@@ -156,11 +156,13 @@
   margin-bottom: 0;
 }
 
-.signal-card strong {
+.signal-card span {
   display: block;
   color: var(--color-cyan);
-  font-size: 1.6rem;
-  font-weight: 500;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .section h2 {
@@ -349,16 +351,6 @@
 
 .about {
   position: relative;
-}
-
-.about::after {
-  content: "";
-  position: absolute;
-  top: var(--space-section);
-  bottom: var(--space-section);
-  left: calc(45% + 1.25rem);
-  width: 1px;
-  background: linear-gradient(transparent, var(--color-cyan) 22%, var(--color-cyan) 78%, transparent);
 }
 
 .about h2 {

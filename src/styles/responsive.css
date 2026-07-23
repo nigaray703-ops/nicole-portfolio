@@ -1,6 +1,6 @@
 @media (max-width: 900px) {
   .hero,
-  .about {
+  .profile-layout {
     grid-template-columns: 1fr;
   }
 
@@ -9,7 +9,12 @@
   }
 
   .hero__portrait {
-    min-height: 24rem;
+    min-height: 31rem;
+  }
+
+  .hero__portrait img {
+    width: min(22rem, 88%);
+    height: 28rem;
   }
 
   .project-list {
@@ -35,8 +40,14 @@
     border: 1px solid var(--color-line);
   }
 
-  .about::after {
-    display: none;
+  .profile-layout > .section:first-child {
+    padding-right: 0;
+  }
+
+  .profile-layout > .section:last-child {
+    padding-left: 0;
+    border-top: 1px solid var(--color-line);
+    border-left: 0;
   }
 }
 

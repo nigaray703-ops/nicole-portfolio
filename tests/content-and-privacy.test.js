@@ -31,10 +31,31 @@ describe("public portfolio contract", () => {
     projects.forEach((project) => expect(html).toContain(project));
   });
 
+  it("keeps the current-focus signal free of a numeric metric", () => {
+    const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+    const signalCard = document.querySelector(".signal-card");
+
+    expect(signalCard).not.toBeNull();
+    expect(signalCard.textContent).toContain("Current focus");
+    expect(signalCard.textContent).toContain("Research / Process / Product / AI");
+    expect(signalCard.querySelector("strong")).toBeNull();
+  });
+
   it("contains every required page region", () => {
     ["work", "capabilities", "experience", "about", "contact"].forEach((id) => {
       expect(html).toContain(`id="${id}"`);
     });
+  });
+
+  it("pairs Experience and About in their original order", () => {
+    const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+    const profileLayout = document.querySelector(".profile-layout");
+
+    expect(profileLayout).not.toBeNull();
+    expect([...profileLayout.children].map((section) => section.id)).toEqual([
+      "experience",
+      "about",
+    ]);
   });
 
   it("keeps case studies readable without JavaScript", () => {
