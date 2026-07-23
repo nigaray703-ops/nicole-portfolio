@@ -41,10 +41,13 @@ describe("public portfolio contract", () => {
     const document = new JSDOM(html).window.document;
     const triggers = document.querySelectorAll("[data-case-trigger]");
     const panels = document.querySelectorAll("[data-case-panel]");
+    const closeButtons = document.querySelectorAll("[data-case-close]");
 
     expect(triggers).toHaveLength(4);
     expect(panels).toHaveLength(4);
+    expect(closeButtons).toHaveLength(4);
     triggers.forEach((trigger) => expect(trigger.hasAttribute("hidden")).toBe(true));
     panels.forEach((panel) => expect(panel.hasAttribute("hidden")).toBe(false));
+    closeButtons.forEach((button) => expect(button.hasAttribute("hidden")).toBe(true));
   });
 });
