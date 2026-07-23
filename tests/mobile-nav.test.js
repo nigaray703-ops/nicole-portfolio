@@ -72,10 +72,12 @@ describe("mobile navigation", () => {
   it("updates the current link from observed section visibility", () => {
     cleanup();
     let observerCallback;
+    let observerOptions;
     let disconnected = false;
     class MockIntersectionObserver {
-      constructor(callback) {
+      constructor(callback, options) {
         observerCallback = callback;
+        observerOptions = options;
       }
       observe() {}
       disconnect() {
@@ -84,6 +86,8 @@ describe("mobile navigation", () => {
     }
     cleanup = initMobileNav(document, MockIntersectionObserver);
 
+    expect(observerOptions.rootMargin).toBe("-120px 0px -320px");
+    expect(observerOptions.rootMargin).not.toContain("%");
     observerCallback([
       {
         target: document.querySelector("#about"),

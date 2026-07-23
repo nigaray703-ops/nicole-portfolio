@@ -65,7 +65,7 @@ export function initMobileNav(root = document, Observer = globalThis.Intersectio
           .sort((left, right) => right.intersectionRatio - left.intersectionRatio)[0];
         if (current) setActive(current.target.id);
       },
-      { rootMargin: "-25% 0px -60%", threshold: [0.1, 0.35, 0.6] },
+      { rootMargin: "-120px 0px -320px", threshold: [0.1, 0.35, 0.6] },
     );
     targets.forEach((target) => sectionObserver.observe(target));
   }
