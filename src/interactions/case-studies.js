@@ -1,10 +1,23 @@
 export function initCaseStudies(root = document) {
   const triggers = [...root.querySelectorAll("[data-case-trigger]")];
-  const documentRoot = root.ownerDocument ?? root;
+  const panelsById = new Map(
+    [...root.querySelectorAll("[data-case-panel]")].map((panel) => [panel.id, panel]),
+  );
   let activeTrigger = null;
 
+  const getPanel = (trigger) => {
+    const panelId = trigger.getAttribute("aria-controls");
+    const panel = panelsById.get(panelId);
+    if (!panel) {
+      throw new Error(`Case-study panel "${panelId}" was not found within the supplied root.`);
+    }
+    return panel;
+  };
+
+  triggers.forEach(getPanel);
+
   const close = (trigger, restoreFocus = true) => {
-    const panel = documentRoot.getElementById(trigger.getAttribute("aria-controls"));
+    const panel = getPanel(trigger);
     trigger.setAttribute("aria-expanded", "false");
     panel.hidden = true;
     if (restoreFocus) trigger.focus();
@@ -13,7 +26,7 @@ export function initCaseStudies(root = document) {
 
   const open = (trigger) => {
     if (activeTrigger && activeTrigger !== trigger) close(activeTrigger, false);
-    const panel = documentRoot.getElementById(trigger.getAttribute("aria-controls"));
+    const panel = getPanel(trigger);
     trigger.setAttribute("aria-expanded", "true");
     panel.hidden = false;
     activeTrigger = trigger;
@@ -21,7 +34,7 @@ export function initCaseStudies(root = document) {
   };
 
   triggers.forEach((trigger) => {
-    const panel = documentRoot.getElementById(trigger.getAttribute("aria-controls"));
+    const panel = getPanel(trigger);
     trigger.hidden = false;
     panel.querySelector("[data-case-close]").hidden = false;
     panel.hidden = true;
