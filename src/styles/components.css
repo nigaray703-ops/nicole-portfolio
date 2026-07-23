@@ -188,6 +188,13 @@
   color: var(--color-muted);
 }
 
+.section-intro {
+  max-width: 40rem;
+  margin: 1.25rem 0 0;
+  color: var(--color-muted);
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+}
+
 .project {
   min-height: 17rem;
   padding: clamp(1.4rem, 3vw, 2rem);
@@ -351,9 +358,18 @@
 
 .about {
   position: relative;
+  gap: 0;
+}
+
+.section-label {
+  margin: 0 0 0.75rem;
+  color: var(--color-mint);
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .about h2 {
+  margin-bottom: 2rem;
   color: var(--color-text);
 }
 

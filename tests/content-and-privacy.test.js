@@ -58,6 +58,24 @@ describe("public portfolio contract", () => {
     ]);
   });
 
+  it("uses the accepted section labels and Capabilities supporting copy", () => {
+    const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+
+    expect(document.querySelector("#experience-title").textContent.trim()).toBe("Experience");
+    expect(document.querySelector("#capabilities .section-intro").textContent.trim()).toBe(
+      "A balanced toolkit across analysis, people, products and emerging technology.",
+    );
+    expect(document.querySelector("#about .section-label").textContent.trim()).toBe("About");
+  });
+
+  it("declares an inline favicon so browsers do not request a missing asset", () => {
+    const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+    const favicon = document.querySelector('link[rel="icon"]');
+
+    expect(favicon).not.toBeNull();
+    expect(favicon.getAttribute("href")).toBe("data:,");
+  });
+
   it("keeps case studies readable without JavaScript", () => {
     const document = new JSDOM(html).window.document;
     const triggers = document.querySelectorAll("[data-case-trigger]");
