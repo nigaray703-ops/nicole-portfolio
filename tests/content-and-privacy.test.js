@@ -4,6 +4,7 @@ import { JSDOM } from "jsdom";
 import { describe, expect, it } from "vitest";
 
 const html = readFileSync(resolve("index.html"), "utf8");
+const componentsCss = readFileSync(resolve("src/styles/components.css"), "utf8");
 
 describe("public portfolio contract", () => {
   it("contains the approved public identity and role", () => {
@@ -74,6 +75,12 @@ describe("public portfolio contract", () => {
 
     expect(favicon).not.toBeNull();
     expect(favicon.getAttribute("href")).toBe("data:,");
+  });
+
+  it("keeps the About label style more specific than generic About paragraph rules", () => {
+    expect(componentsCss).toMatch(
+      /\.about \.section-label\s*{[^}]*color:\s*var\(--color-mint\);[^}]*font-size:\s*0\.9rem;[^}]*}/s,
+    );
   });
 
   it("keeps case studies readable without JavaScript", () => {

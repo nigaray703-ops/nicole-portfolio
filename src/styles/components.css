@@ -361,7 +361,7 @@
   gap: 0;
 }
 
-.section-label {
+.about .section-label {
   margin: 0 0 0.75rem;
   color: var(--color-mint);
   font-size: 0.9rem;
