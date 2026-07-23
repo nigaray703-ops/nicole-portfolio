@@ -18,17 +18,130 @@
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
       <a class="brand" href="#top" aria-label="Nicole portfolio home">Nicole.</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="sr-only">Open navigation</span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+      <nav id="primary-nav" aria-label="Primary navigation">
+        <a href="#work">Work</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#experience">Experience</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </header>
     <main id="main-content">
-      <section id="top" aria-labelledby="hero-title">
-        <h1 id="hero-title">Turning signals into structured decisions.</h1>
-        <p>Nicole Nikareayi · Graduate Business Analyst · Auckland, New Zealand</p>
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero__copy">
+          <h1 id="hero-title">Turning signals into <span>structured decisions.</span></h1>
+          <p>Graduate Business Analyst translating stakeholder needs, user insight and emerging technology into practical digital solutions.</p>
+          <p class="hero__meta">Digital Product · Technology Innovation · AI-enabled Solutions</p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#work">View Case Studies</a>
+            <a class="button button--secondary" href="mailto:nigaray703@gmail.com">Contact Me</a>
+          </div>
+        </div>
+        <div class="hero__portrait">
+          <img src="/nicole-headshot.jpg" alt="Portrait of Nicole Nikareayi">
+          <div class="signal-card" aria-hidden="true"><span>Current focus</span><strong>04</strong><p>Research / Process / Product / AI</p></div>
+        </div>
+      </section>
+      <section class="section" id="work" aria-labelledby="work-title">
+        <div class="section-heading">
+          <h2 id="work-title">Selected case studies</h2>
+          <p>Four real projects showing how I move from ambiguity to structured, human-centred outcomes.</p>
+        </div>
+        <div class="project-list">
+          <article class="project project--featured">
+            <p class="project__index">01 / Internship</p>
+            <h3>Technology Innovation Internship</h3>
+            <p>Designed and developed an interactive cultural storytelling website, translating conceptual requirements into user journeys, interaction flows and an accessible responsive prototype.</p>
+            <button type="button" data-case-trigger="internship" aria-expanded="false" aria-controls="case-internship">Read case study</button>
+            <div id="case-internship" data-case-panel hidden>
+              <h4>Challenge</h4><p>Turn cultural narratives and puzzle-based learning goals into a clear interactive experience.</p>
+              <h4>My Role</h4><p>Requirements translation, user-journey design, prototyping, platform evaluation and iterative refinement.</p>
+              <h4>Approach</h4><p>Structured the interaction flow, reduced cognitive load, tested platform constraints and integrated AI-generated narration for multimodal engagement.</p>
+              <h4>Outcome</h4><p>Delivered a responsive Wix prototype and final presentation after cross-team feedback cycles.</p>
+              <h4>Skills Applied</h4><p>UX thinking, prototyping, process structuring, usability evaluation and stakeholder feedback integration.</p>
+              <button type="button" data-case-close>Close case study</button>
+            </div>
+          </article>
+          <article class="project">
+            <p class="project__index">02 / Digital Health</p>
+            <h3>PawPal Health</h3>
+            <p>Designed an AI-enabled dog wellbeing concept connecting wearable-sensor insight with a trusted user experience.</p>
+            <button type="button" data-case-trigger="pawpal" aria-expanded="false" aria-controls="case-pawpal">Read case study</button>
+            <div id="case-pawpal" data-case-panel hidden>
+              <h4>Challenge</h4><p>Make behavioural and physiological pet-health signals understandable and useful to dog owners.</p>
+              <h4>My Role</h4><p>Led UX/UI prototype design and translated user needs into structured requirements and interaction flows.</p>
+              <h4>Approach</h4><p>Applied empathy-based design, created a dashboard concept and communicated the product value through a pitch presentation.</p>
+              <h4>Outcome</h4><p>Produced an interactive Proto.io concept linking emerging technology to a practical user need.</p>
+              <h4>Skills Applied</h4><p>User research, product ideation, UX prototyping, AI application conceptualisation and visual communication.</p>
+              <button type="button" data-case-close>Close case study</button>
+            </div>
+          </article>
+          <article class="project">
+            <p class="project__index">03 / Travel</p>
+            <h3>GlobeMate</h3>
+            <p>Developed a personalised travel concept combining weather insight, budget estimation and memory mapping.</p>
+            <button type="button" data-case-trigger="globemate" aria-expanded="false" aria-controls="case-globemate">Read case study</button>
+            <div id="case-globemate" data-case-panel hidden>
+              <h4>Challenge</h4><p>Support international travellers facing fragmented planning information and changing constraints.</p>
+              <h4>My Role</h4><p>Market research, customer segmentation, product feature logic and business-case development.</p>
+              <h4>Approach</h4><p>Analysed travel behaviour, shaped the value proposition and connected recommendations with budget and weather information.</p>
+              <h4>Outcome</h4><p>Contributed to a validated multidisciplinary product concept balancing commercial and technical perspectives.</p>
+              <h4>Skills Applied</h4><p>Market research, customer segmentation, product strategy and collaborative ideation.</p>
+              <button type="button" data-case-close>Close case study</button>
+            </div>
+          </article>
+          <article class="project">
+            <p class="project__index">04 / Personal Project</p>
+            <h3>AI-assisted Job Application Tracker</h3>
+            <p>Built and maintained a personal workflow tool supporting clearer job-search organisation and AI-assisted web experimentation.</p>
+            <button type="button" data-case-trigger="tracker" aria-expanded="false" aria-controls="case-tracker">Read case study</button>
+            <div id="case-tracker" data-case-panel hidden>
+              <h4>Challenge</h4><p>Keep applications, statuses and follow-up information organised in one personal workflow.</p>
+              <h4>My Role</h4><p>Product owner, workflow designer and hands-on AI-assisted builder.</p>
+              <h4>Approach</h4><p>Structured the application workflow, refined the interface and used iterative AI-assisted development.</p>
+              <h4>Outcome</h4><p>Created a maintained personal tool that supports ongoing job-search organisation.</p>
+              <h4>Skills Applied</h4><p>Workflow design, product iteration, AI-assisted development and digital content creation.</p>
+              <button type="button" data-case-close>Close case study</button>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="section" id="capabilities" aria-labelledby="capabilities-title">
+        <h2 id="capabilities-title">Capabilities</h2>
+        <div class="capability-grid">
+          <article><h3>Business Analysis</h3><p>Requirements gathering, stakeholder interviews, process mapping, workflow modelling and gap analysis.</p></article>
+          <article><h3>User Research</h3><p>Qualitative research, journey mapping, market research and insight synthesis.</p></article>
+          <article><h3>Digital Product</h3><p>Product ideation, MVP definition, prototyping and solution evaluation.</p></article>
+          <article><h3>AI-enabled Solutions</h3><p>Practical AI experimentation for workflows, content and product concepts.</p></article>
+          <article><h3>Communication</h3><p>Clear documentation, presentation delivery and multicultural collaboration.</p></article>
+          <article><h3>Tools</h3><p>Figma, Miro, Proto.io, Wix, Excel and foundational Python.</p></article>
+        </div>
+      </section>
+      <section class="section" id="experience" aria-labelledby="experience-title">
+        <h2 id="experience-title">Experience and education</h2>
+        <ol class="timeline">
+          <li><time>2025–2026</time><h3>Technology Innovation Internship</h3><p>University of Waikato · 400+ hours</p></li>
+          <li><time>2025–2026</time><h3>Master of Technology Innovation in Business</h3><p>University of Waikato · Distinction</p></li>
+          <li><time>2020–2024</time><h3>Bachelor of Management (Accounting)</h3><p>Dalian Jiaotong University</p></li>
+        </ol>
+      </section>
+      <section class="section about" id="about" aria-labelledby="about-title">
+        <h2 id="about-title">Curious about people. Precise about systems.</h2>
+        <p>I bring together business thinking, human-centred design and technology innovation to make complex ideas easier to understand and act on.</p>
+        <p>My multicultural background supports thoughtful communication across teams and a strong interest in inclusive technology, cultural storytelling and language learning.</p>
+      </section>
+      <section class="section contact" id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">Let's turn complexity into clarity.</h2>
+        <p>Based in Auckland, New Zealand. Open to graduate Business Analyst opportunities.</p>
+        <a class="button button--primary" href="mailto:nigaray703@gmail.com">Email Nicole</a>
+        <a class="button button--secondary" href="https://www.linkedin.com/in/nikareayi-aisikaer">LinkedIn</a>
       </section>
     </main>
-    <footer>
-      <a href="mailto:nigaray703@gmail.com">Email Nicole</a>
-      <a href="https://www.linkedin.com/in/nikareayi-aisikaer">LinkedIn</a>
-    </footer>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

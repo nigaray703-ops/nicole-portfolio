@@ -19,4 +19,20 @@ describe("public portfolio contract", () => {
     expect(html).not.toContain("owner-admin");
     expect(html).not.toContain("Supabase");
   });
+
+  it("contains the four approved case studies", () => {
+    const projects = [
+      "Technology Innovation Internship",
+      "PawPal Health",
+      "GlobeMate",
+      "AI-assisted Job Application Tracker",
+    ];
+    projects.forEach((project) => expect(html).toContain(project));
+  });
+
+  it("contains every required page region", () => {
+    ["work", "capabilities", "experience", "about", "contact"].forEach((id) => {
+      expect(html).toContain(`id="${id}"`);
+    });
+  });
 });
