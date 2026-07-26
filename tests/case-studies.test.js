@@ -18,13 +18,14 @@ describe("case studies", () => {
     cleanup();
   });
 
-  it("opens the controlled panel and updates aria-expanded", () => {
+  it("opens the controlled panel without jumping focus to the close button", () => {
     const trigger = document.querySelector("[data-case-trigger]");
     const panel = document.querySelector("[data-case-panel]");
+    trigger.focus();
     trigger.click();
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
     expect(panel.hidden).toBe(false);
-    expect(document.activeElement).toBe(panel.querySelector("[data-case-close]"));
+    expect(document.activeElement).toBe(trigger);
   });
 
   it("enhances the visible no-JavaScript fallback only after initialisation", () => {

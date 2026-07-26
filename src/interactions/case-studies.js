@@ -30,7 +30,6 @@ export function initCaseStudies(root = document) {
     trigger.setAttribute("aria-expanded", "true");
     panel.hidden = false;
     activeTrigger = trigger;
-    panel.querySelector("[data-case-close]").focus();
   };
 
   triggers.forEach((trigger) => {
