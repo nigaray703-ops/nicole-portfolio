@@ -99,6 +99,14 @@ describe("public portfolio contract", () => {
     expect(responsiveCss).not.toMatch(/^\s{2}#primary-nav\s*{[^}]*display:\s*none;/m);
   });
 
+  it("clips decorative hero geometry throughout the stacked-tablet layout", () => {
+    const stackedLayout = responsiveCss.match(
+      /@media \(max-width:\s*900px\)\s*{([\s\S]*?)\n}\n\n@media \(max-width:\s*680px\)/,
+    )?.[1];
+
+    expect(stackedLayout).toMatch(/\.hero\s*{[^}]*overflow:\s*clip;/s);
+  });
+
   it("provides a visible non-color active navigation treatment", () => {
     expect(componentsCss).toMatch(
       /#primary-nav a\[aria-current="location"\][^}]*text-decoration-line:\s*underline;/s,

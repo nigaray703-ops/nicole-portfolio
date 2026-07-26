@@ -6,6 +6,7 @@
 
   .hero {
     padding-block: 5rem;
+    overflow: clip;
   }
 
   .hero__portrait {
