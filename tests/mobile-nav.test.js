@@ -104,6 +104,47 @@ describe("mobile navigation", () => {
     cleanup = () => {};
   });
 
+  it("clears the active link when no observed section remains visible", () => {
+    cleanup();
+    let observerCallback;
+    class MockIntersectionObserver {
+      constructor(callback) {
+        observerCallback = callback;
+      }
+      observe() {}
+      disconnect() {}
+    }
+    cleanup = initMobileNav(document, MockIntersectionObserver);
+    const work = document.querySelector('nav a[href="#work"]');
+
+    observerCallback([
+      {
+        target: document.querySelector("#work"),
+        isIntersecting: true,
+        intersectionRatio: 0.8,
+      },
+    ]);
+    expect(work.getAttribute("aria-current")).toBe("location");
+
+    observerCallback([
+      {
+        target: document.querySelector("#work"),
+        isIntersecting: false,
+        intersectionRatio: 0,
+      },
+    ]);
+    expect(work.hasAttribute("aria-current")).toBe(false);
+  });
+
+  it("closes an open mobile menu with Escape and restores toggle focus", () => {
+    const toggle = document.querySelector(".nav-toggle");
+    toggle.click();
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    expect(document.activeElement).toBe(toggle);
+  });
+
   it("resolves the controlled navigation only inside the supplied root", () => {
     const root = document.createElement("section");
     root.innerHTML = `

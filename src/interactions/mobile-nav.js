@@ -20,6 +20,12 @@ export function initMobileNav(root = document, Observer = globalThis.Intersectio
     nav.dataset.open = String(open);
     toggle.querySelector(".sr-only").textContent = open ? "Close navigation" : "Open navigation";
   };
+  const clearActive = () => {
+    links.forEach((link) => {
+      link.classList.remove("is-active");
+      link.removeAttribute("aria-current");
+    });
+  };
   const setActive = (id) => {
     links.forEach((link) => {
       const active = link.getAttribute("href") === `#${id}`;
@@ -47,6 +53,11 @@ export function initMobileNav(root = document, Observer = globalThis.Intersectio
     }
   };
   const onToggle = () => setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  const onKeydown = (event) => {
+    if (event.key !== "Escape" || toggle.getAttribute("aria-expanded") !== "true") return;
+    setOpen(false);
+    toggle.focus();
+  };
   const onNavClick = (event) => {
     const link = event.target.closest("a");
     if (!link || !nav.contains(link)) return;
@@ -58,12 +69,17 @@ export function initMobileNav(root = document, Observer = globalThis.Intersectio
 
   let sectionObserver = null;
   if (typeof Observer === "function" && targets.size > 0) {
+    const visibleTargets = new Map();
     sectionObserver = new Observer(
       (entries) => {
-        const current = entries
-          .filter((entry) => entry.isIntersecting)
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visibleTargets.set(entry.target.id, entry);
+          else visibleTargets.delete(entry.target.id);
+        });
+        const current = [...visibleTargets.values()]
           .sort((left, right) => right.intersectionRatio - left.intersectionRatio)[0];
         if (current) setActive(current.target.id);
+        else clearActive();
       },
       { rootMargin: "-120px 0px -320px", threshold: [0.1, 0.35, 0.6] },
     );
@@ -72,11 +88,13 @@ export function initMobileNav(root = document, Observer = globalThis.Intersectio
 
   toggle.addEventListener("click", onToggle);
   nav.addEventListener("click", onNavClick);
+  root.addEventListener("keydown", onKeydown);
   setOpen(false);
 
   return () => {
     toggle.removeEventListener("click", onToggle);
     nav.removeEventListener("click", onNavClick);
+    root.removeEventListener("keydown", onKeydown);
     sectionObserver?.disconnect();
   };
 }
