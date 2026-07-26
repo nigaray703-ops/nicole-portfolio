@@ -40,7 +40,7 @@ describe("public portfolio contract", () => {
 
     expect(signalCard).not.toBeNull();
     expect(signalCard.textContent).toContain("Current focus");
-    expect(signalCard.textContent).toContain("Research / Process / Product / AI");
+    expect(signalCard.textContent).toContain("Business Analysis / Process / Product / AI");
     expect(signalCard.querySelector("strong")).toBeNull();
   });
 
@@ -53,20 +53,60 @@ describe("public portfolio contract", () => {
   });
 
   it("contains every required page region", () => {
-    ["work", "capabilities", "experience", "about", "contact"].forEach((id) => {
+    ["work", "capabilities", "experience", "education", "leadership", "about", "contact"].forEach((id) => {
       expect(html).toContain(`id="${id}"`);
     });
   });
 
-  it("pairs Experience and About in their original order", () => {
+  it("uses the approved Moonline Signature identity", () => {
     const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
-    const profileLayout = document.querySelector(".profile-layout");
+    const brand = document.querySelector(".brand");
 
-    expect(profileLayout).not.toBeNull();
-    expect([...profileLayout.children].map((section) => section.id)).toEqual([
-      "experience",
-      "about",
-    ]);
+    expect(brand.querySelector(".brand__signature").textContent.trim()).toBe("Nicole");
+    expect(brand.querySelector(".brand__surname").textContent.trim()).toBe("Nikareayi");
+    expect(brand.querySelector(".brand__moon").getAttribute("aria-hidden")).toBe("true");
+  });
+
+  it("separates experience, education, leadership, and about", () => {
+    const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+    const experienceItems = document.querySelectorAll("#experience .timeline > li");
+
+    expect(experienceItems).toHaveLength(1);
+    expect(document.querySelector("#education-title").textContent.trim()).toBe("Education");
+    expect(document.querySelector("#leadership-title").textContent.trim()).toBe(
+      "Leadership & Community",
+    );
+    expect(document.querySelector("#education")).not.toBeNull();
+    expect(document.querySelector("#leadership")).not.toBeNull();
+  });
+
+  it("contains exact recruiter-facing project context", () => {
+    [
+      "STEMX500 · 400+ hours · Nov 2025–Feb 2026 · Wix",
+      "COMPX500 · Sep–Oct 2025 · Proto.io",
+      "MNNGT544 · Jul–Oct 2025 · Multidisciplinary team",
+      "Personal project · Workflow design · AI-assisted web development",
+    ].forEach((metadata) => expect(html).toContain(metadata));
+  });
+
+  it("uses the evidence-safe GlobeMate outcome", () => {
+    expect(html).toContain(
+      "Contributed to business-case development and concept validation within a multidisciplinary team.",
+    );
+    expect(html).not.toContain(
+      "Contributed to a validated multidisciplinary product concept",
+    );
+  });
+
+  it("includes Business Analyst and Office evidence", () => {
+    const publicCopy = html.toLowerCase();
+    [
+      "user stories",
+      "functional specification support",
+      "pivot tables",
+      "powerpoint",
+      "requirements documentation",
+    ].forEach((term) => expect(publicCopy).toContain(term));
   });
 
   it("uses the accepted section labels and Capabilities supporting copy", () => {
