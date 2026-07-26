@@ -1,14 +1,14 @@
 :root {
-  color-scheme: dark;
-  --color-bg: #03101a;
-  --color-surface: #071b29;
-  --color-surface-raised: #092333;
-  --color-text: #eaf7ff;
-  --color-muted: #8aa8ba;
-  --color-cyan: #53c9ff;
-  --color-mint: #71f0cd;
-  --color-line: rgba(116, 203, 245, 0.17);
-  --color-focus: #b9f3ff;
+  color-scheme: light;
+  --color-bg: #f8fcff;
+  --color-surface: rgba(255, 255, 255, 0.78);
+  --color-surface-raised: #ffffff;
+  --color-text: #12384a;
+  --color-muted: #567485;
+  --color-cyan: #22a5d5;
+  --color-mint: #31c8aa;
+  --color-line: rgba(31, 128, 165, 0.2);
+  --color-focus: #075985;
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
     "Avenir Next", "Segoe UI Variable", "Segoe UI", "Helvetica Neue", Helvetica, Arial,
     "Liberation Sans", sans-serif;
@@ -17,5 +17,5 @@
   --space-section: clamp(5rem, 9vw, 8rem);
   --radius-small: 0.5rem;
   --radius-medium: 0.875rem;
-  --shadow-glow: 0 1.5rem 5rem rgba(18, 110, 158, 0.24);
+  --shadow-glow: 0 1.5rem 5rem rgba(42, 117, 151, 0.16);
 }

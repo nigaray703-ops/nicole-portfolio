@@ -4,6 +4,7 @@ import { JSDOM } from "jsdom";
 import { describe, expect, it } from "vitest";
 
 const html = readFileSync(resolve("index.html"), "utf8");
+const baseCss = readFileSync(resolve("src/styles/base.css"), "utf8");
 const componentsCss = readFileSync(resolve("src/styles/components.css"), "utf8");
 const responsiveCss = readFileSync(resolve("src/styles/responsive.css"), "utf8");
 const tokensCss = readFileSync(resolve("src/styles/tokens.css"), "utf8");
@@ -159,6 +160,23 @@ describe("public portfolio contract", () => {
     expect(tokensCss).toContain('"Segoe UI Variable"');
     expect(tokensCss).toContain('"Helvetica Neue"');
     expect(tokensCss).toContain('"Liberation Sans"');
+  });
+
+  it("uses the approved Morning Sky light-theme tokens", () => {
+    expect(tokensCss).toContain("--color-bg: #f8fcff");
+    expect(tokensCss).toContain("--color-text: #12384a");
+    expect(tokensCss).toContain("--color-muted: #567485");
+    expect(tokensCss).toContain("--color-cyan: #22a5d5");
+    expect(tokensCss).toContain("--color-mint: #31c8aa");
+    expect(baseCss).toContain("#e9f3ff");
+    expect(baseCss).toContain("#edf9f6");
+  });
+
+  it("styles the Moonline Signature without an external font request", () => {
+    expect(componentsCss).toMatch(/\.brand__signature\s*{/);
+    expect(componentsCss).toMatch(/\.brand__moon\s*{/);
+    expect(componentsCss).toContain('"Snell Roundhand"');
+    expect(html).not.toMatch(/fonts\.(googleapis|gstatic)\.com/);
   });
 
   it("keeps case studies readable without JavaScript", () => {

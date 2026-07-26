@@ -9,7 +9,10 @@ html {
 body {
   margin: 0;
   overflow-x: hidden;
-  background: var(--color-bg);
+  background:
+    radial-gradient(circle at 78% 22%, rgba(88, 205, 189, 0.17), transparent 27%),
+    radial-gradient(circle at 8% 85%, rgba(76, 160, 219, 0.13), transparent 30%),
+    linear-gradient(145deg, #e9f3ff 0%, #f8fcff 52%, #edf9f6 100%);
   color: var(--color-text);
   font-family: var(--font-sans);
   line-height: 1.6;
@@ -20,10 +23,10 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.7;
   background-image:
-    linear-gradient(rgba(68, 175, 225, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(68, 175, 225, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(45, 137, 174, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 137, 174, 0.055) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
@@ -57,7 +60,7 @@ button {
   padding: 0.65rem 0.9rem;
   border-radius: var(--radius-small);
   background: var(--color-focus);
-  color: var(--color-bg);
+  color: #ffffff;
 }
 
 .skip-link:focus {
