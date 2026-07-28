@@ -20,6 +20,7 @@ export function initCaseStudies(root = document) {
     const panel = getPanel(trigger);
     trigger.setAttribute("aria-expanded", "false");
     panel.hidden = true;
+    trigger.closest(".project")?.classList.remove("project--expanded");
     if (restoreFocus) trigger.focus();
     if (activeTrigger === trigger) activeTrigger = null;
   };
@@ -29,6 +30,7 @@ export function initCaseStudies(root = document) {
     const panel = getPanel(trigger);
     trigger.setAttribute("aria-expanded", "true");
     panel.hidden = false;
+    trigger.closest(".project")?.classList.add("project--expanded");
     activeTrigger = trigger;
   };
 

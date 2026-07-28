@@ -6,13 +6,40 @@ import { describe, expect, it } from "vitest";
 const html = readFileSync(resolve("index.html"), "utf8");
 const baseCss = readFileSync(resolve("src/styles/base.css"), "utf8");
 const componentsCss = readFileSync(resolve("src/styles/components.css"), "utf8");
+const layoutCss = readFileSync(resolve("src/styles/layout.css"), "utf8");
 const responsiveCss = readFileSync(resolve("src/styles/responsive.css"), "utf8");
 const tokensCss = readFileSync(resolve("src/styles/tokens.css"), "utf8");
+
+function cssHexToken(css, name) {
+  return css.match(new RegExp(`${name}:\\s*(#[0-9a-f]{6})`, "i"))?.[1];
+}
+
+function relativeLuminance(hex) {
+  const channels = hex
+    .slice(1)
+    .match(/../g)
+    .map((channel) => Number.parseInt(channel, 16) / 255)
+    .map((channel) =>
+      channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4,
+    );
+
+  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+}
+
+function contrastRatio(first, second) {
+  const firstLuminance = relativeLuminance(first);
+  const secondLuminance = relativeLuminance(second);
+  return (
+    (Math.max(firstLuminance, secondLuminance) + 0.05) /
+    (Math.min(firstLuminance, secondLuminance) + 0.05)
+  );
+}
 
 describe("public portfolio contract", () => {
   it("contains the approved public identity and role", () => {
     expect(html).toContain("Nicole Nikareayi");
-    expect(html).toContain("Graduate Business Analyst");
+    expect(html).toContain("Graduate Business Analyst for");
+    expect(html).toContain("systems, data &amp; implementation.");
     expect(html).toContain("Auckland, New Zealand");
     expect(html).toContain("nigaray703@gmail.com");
     expect(html).toContain("linkedin.com/in/nikareayi-aisikaer");
@@ -25,6 +52,14 @@ describe("public portfolio contract", () => {
     expect(html).not.toContain("Supabase");
   });
 
+  it("offers a privacy-safe public CV download", () => {
+    const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+    const cvLink = document.querySelector('a[download][href="/Nicole_Nikareayi_CV.pdf"]');
+
+    expect(cvLink).not.toBeNull();
+    expect(cvLink.textContent.trim()).toBe("Download CV");
+  });
+
   it("contains the four approved case studies", () => {
     const projects = [
       "Technology Innovation Internship",
@@ -35,13 +70,26 @@ describe("public portfolio contract", () => {
     projects.forEach((project) => expect(html).toContain(project));
   });
 
+  it("shows real visual evidence for the two priority case studies", () => {
+    const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+    const internshipEvidence = document.querySelector(
+      '#case-internship img[src="/case-studies/stemx500-user-journey.png"]',
+    );
+    const pawpalEvidence = document.querySelector(
+      '#case-pawpal img[src="/case-studies/pawpal-prototype.png"]',
+    );
+
+    expect(internshipEvidence?.getAttribute("alt")).toContain("user journey");
+    expect(pawpalEvidence?.getAttribute("alt")).toContain("PawPal Health");
+  });
+
   it("keeps the current-focus signal free of a numeric metric", () => {
     const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
     const signalCard = document.querySelector(".signal-card");
 
     expect(signalCard).not.toBeNull();
-    expect(signalCard.textContent).toContain("Current focus");
-    expect(signalCard.textContent).toContain("Business Analysis / Process / Product / AI");
+    expect(signalCard.textContent).toContain("Target focus");
+    expect(signalCard.textContent).toContain("Business Analysis / Systems / Data / Implementation");
     expect(signalCard.querySelector("strong")).toBeNull();
   });
 
@@ -115,9 +163,23 @@ describe("public portfolio contract", () => {
 
     expect(document.querySelector("#experience-title").textContent.trim()).toBe("Experience");
     expect(document.querySelector("#capabilities .section-intro").textContent.trim()).toBe(
-      "A balanced toolkit across analysis, people, products and emerging technology.",
+      "Role-aligned capabilities, each connected to evidence from real projects.",
     );
     expect(document.querySelector("#about .section-label").textContent.trim()).toBe("About");
+  });
+
+  it("maps every capability to named project evidence", () => {
+    const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+    const capabilityCards = [
+      ...document.querySelectorAll("#capabilities .capability-grid article"),
+    ];
+
+    expect(capabilityCards).toHaveLength(6);
+    capabilityCards.forEach((card) => {
+      expect(card.querySelector(".capability__evidence")?.textContent).toContain(
+        "Evidence:",
+      );
+    });
   });
 
   it("declares an inline favicon so browsers do not request a missing asset", () => {
@@ -130,7 +192,7 @@ describe("public portfolio contract", () => {
 
   it("keeps the About label style more specific than generic About paragraph rules", () => {
     expect(componentsCss).toMatch(
-      /\.about \.section-label\s*{[^}]*color:\s*var\(--color-mint\);[^}]*font-size:\s*0\.9rem;[^}]*}/s,
+      /\.about \.section-label\s*{[^}]*color:\s*var\(--color-mint-strong\);[^}]*font-size:\s*0\.9rem;[^}]*}/s,
     );
   });
 
@@ -170,6 +232,169 @@ describe("public portfolio contract", () => {
     expect(tokensCss).toContain("--color-mint: #31c8aa");
     expect(baseCss).toContain("#e9f3ff");
     expect(baseCss).toContain("#edf9f6");
+  });
+
+  it("provides accent text and gradient stops with readable normal-text contrast", () => {
+    const white = "#ffffff";
+    const background = cssHexToken(tokensCss, "--color-bg");
+    const cyanStrong = cssHexToken(tokensCss, "--color-cyan-strong");
+    const mintStrong = cssHexToken(tokensCss, "--color-mint-strong");
+
+    expect(cyanStrong).toBeDefined();
+    expect(mintStrong).toBeDefined();
+    expect(contrastRatio(cyanStrong, background)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(mintStrong, background)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(cyanStrong, white)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(mintStrong, white)).toBeGreaterThanOrEqual(4.5);
+    expect(componentsCss).toMatch(
+      /\.button--primary\s*{[^}]*var\(--color-cyan-strong\)[^}]*var\(--color-mint-strong\)/s,
+    );
+  });
+
+  it("keeps recruiter-facing navigation and action labels at least fourteen pixels", () => {
+    const navRem = Number(
+      layoutCss.match(/#primary-nav a[^}]*font-size:\s*([0-9.]+)rem/s)?.[1],
+    );
+    const buttonRem = Number(
+      componentsCss.match(
+        /\.button,\s*\n\[data-case-trigger\],[^}]*font-size:\s*([0-9.]+)rem/s,
+      )?.[1],
+    );
+
+    expect(navRem * 16).toBeGreaterThanOrEqual(14);
+    expect(buttonRem * 16).toBeGreaterThanOrEqual(14);
+  });
+
+  it("keeps technical metadata legible without relying on sub-twelve-pixel text", () => {
+    const projectMetaRem = Number(
+      componentsCss.match(/\.project__meta\s*{[^}]*font-size:\s*([0-9.]+)rem/s)?.[1],
+    );
+    const signalCardRem = Number(
+      componentsCss.match(/\.signal-card\s*{[^}]*font-size:\s*([0-9.]+)rem/s)?.[1],
+    );
+
+    expect(projectMetaRem * 16).toBeGreaterThanOrEqual(12);
+    expect(signalCardRem * 16).toBeGreaterThanOrEqual(12);
+  });
+
+  it("uses a compact destination-heading focus treatment instead of a full-width frame", () => {
+    expect(baseCss).toMatch(
+      /\.section h2\[tabindex="-1"\]:focus-visible\s*{[^}]*width:\s*fit-content;[^}]*outline-width:\s*2px;/s,
+    );
+  });
+
+  it("gives the mobile menu an opaque elevated surface and readable labels", () => {
+    const mobileMenu = responsiveCss.match(
+      /\.js #primary-nav\s*{([\s\S]*?)\n\s*}/,
+    )?.[1];
+
+    expect(mobileMenu).toMatch(/background:\s*var\(--color-bg\);/);
+    expect(mobileMenu).toMatch(/box-shadow:/);
+    expect(responsiveCss).toMatch(
+      /@media \(max-width:\s*760px\)[\s\S]*#primary-nav a\s*{[^}]*font-size:\s*0\.875rem;/,
+    );
+  });
+
+  it("uses compact mobile section and project spacing for recruiter scanning", () => {
+    const narrowMobile = responsiveCss.match(
+      /@media \(max-width:\s*680px\)\s*{([\s\S]*)\n}/,
+    )?.[1];
+
+    expect(narrowMobile).toMatch(/--space-section:\s*3\.25rem;/);
+    expect(narrowMobile).toMatch(
+      /\.project h3,[\s\S]*\.project--featured h3\s*{[^}]*margin-top:\s*1\.25rem;/s,
+    );
+    expect(narrowMobile).toMatch(
+      /\.capability-grid article\s*{[^}]*min-height:\s*auto;[^}]*padding:\s*1rem;/s,
+    );
+    expect(narrowMobile).toMatch(
+      /\.hero__portrait img,[\s\S]*\.portrait-fallback\s*{[^}]*height:\s*14rem;/s,
+    );
+  });
+
+  it("renders project cards as a balanced desktop grid without an oversized featured card", () => {
+    const dom = new JSDOM(html, { url: "http://localhost/" });
+    const style = dom.window.document.createElement("style");
+    style.textContent = `${layoutCss}\n${componentsCss}`;
+    dom.window.document.head.append(style);
+
+    const projectList = dom.window.document.querySelector(".project-list");
+    const featuredProject = dom.window.document.querySelector(".project--featured");
+    const regularProject = dom.window.document.querySelector(
+      ".project:not(.project--featured)",
+    );
+    const featuredHeading = featuredProject.querySelector("h3");
+    const regularHeading = regularProject.querySelector("h3");
+
+    const projectListStyle = dom.window.getComputedStyle(projectList);
+    const featuredStyle = dom.window.getComputedStyle(featuredProject);
+    const regularStyle = dom.window.getComputedStyle(regularProject);
+    const featuredHeadingStyle = dom.window.getComputedStyle(featuredHeading);
+    const regularHeadingStyle = dom.window.getComputedStyle(regularHeading);
+
+    expect(projectListStyle.gridTemplateColumns).toBe(
+      "repeat(2, minmax(0, 1fr))",
+    );
+    expect(featuredStyle.gridRow).toBe("auto");
+    expect(featuredStyle.minHeight).toBe(regularStyle.minHeight);
+    expect(featuredHeadingStyle.marginTop).toBe(regularHeadingStyle.marginTop);
+  });
+
+  it("keeps collapsed project cards equal-height within each desktop row", () => {
+    expect(layoutCss).toMatch(
+      /\.project-list\s*{[^}]*align-items:\s*stretch;/s,
+    );
+    expect(componentsCss).toMatch(
+      /\.project\s*{[^}]*display:\s*flex;[^}]*flex-direction:\s*column;/s,
+    );
+    expect(componentsCss).toMatch(
+      /\.project > \[data-case-trigger\]\s*{[^}]*margin-top:\s*auto;/s,
+    );
+  });
+
+  it("uses a full-width two-column evidence layout for expanded desktop cases", () => {
+    expect(layoutCss).toMatch(
+      /\.project--expanded\s*{[^}]*grid-column:\s*1\s*\/\s*-1;/s,
+    );
+    expect(componentsCss).toMatch(
+      /\.project--expanded \.case-panel--evidence\s*{[^}]*grid-template-columns:\s*minmax\(0,\s*0\.85fr\)\s*minmax\(0,\s*1\.15fr\);/s,
+    );
+    expect(responsiveCss).toMatch(
+      /@media \(max-width:\s*900px\)[\s\S]*\.project--expanded \.case-panel--evidence\s*{[^}]*grid-template-columns:\s*1fr;/s,
+    );
+  });
+
+  it("renders the site header edge to edge while keeping its content padded", () => {
+    const dom = new JSDOM(html, { url: "http://localhost/" });
+    const style = dom.window.document.createElement("style");
+    style.textContent = layoutCss;
+    dom.window.document.head.append(style);
+
+    const headerStyle = dom.window.getComputedStyle(
+      dom.window.document.querySelector(".site-header"),
+    );
+
+    expect(headerStyle.width).toBe("100%");
+    expect(headerStyle.marginInline).toBe("0");
+    expect(headerStyle.paddingInline).not.toBe("");
+    expect(headerStyle.paddingInline).not.toBe("0");
+  });
+
+  it("keeps the contact headline on one line at desktop widths", () => {
+    const dom = new JSDOM(html, { url: "http://localhost/" });
+    const style = dom.window.document.createElement("style");
+    style.textContent = componentsCss;
+    dom.window.document.head.append(style);
+
+    const contactHeadingStyle = dom.window.getComputedStyle(
+      dom.window.document.querySelector(".contact h2"),
+    );
+
+    expect(contactHeadingStyle.maxWidth).toBe("none");
+    expect(contactHeadingStyle.whiteSpace).toBe("nowrap");
+    expect(responsiveCss).toMatch(
+      /@media \(max-width:\s*680px\)[\s\S]*\.contact h2\s*{[^}]*white-space:\s*normal;/,
+    );
   });
 
   it("styles the Moonline Signature without an external font request", () => {

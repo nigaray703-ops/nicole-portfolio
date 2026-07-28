@@ -65,9 +65,9 @@
 }
 
 .hero h1 {
-  max-width: 11ch;
+  max-width: 13ch;
   margin: 0 0 1.5rem;
-  font-size: clamp(3.4rem, 6.3vw, 5.75rem);
+  font-size: clamp(3.2rem, 5.3vw, 4.85rem);
   font-weight: 580;
   line-height: 0.94;
   letter-spacing: -0.065em;
@@ -86,7 +86,7 @@
 
 .hero__meta {
   font-family: var(--font-mono);
-  font-size: 0.72rem !important;
+  font-size: 0.8rem !important;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -111,9 +111,9 @@
   background: transparent;
   color: var(--color-text);
   cursor: pointer;
-  font-size: 0.74rem;
+  font-size: 0.875rem;
   font-weight: 750;
-  letter-spacing: 0.045em;
+  letter-spacing: 0.035em;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -127,7 +127,11 @@
 
 .button--primary {
   border-color: transparent;
-  background: linear-gradient(90deg, var(--color-cyan), var(--color-mint));
+  background: linear-gradient(
+    90deg,
+    var(--color-cyan-strong),
+    var(--color-mint-strong)
+  );
   color: #ffffff;
   box-shadow: 0 0.75rem 1.8rem rgba(34, 165, 213, 0.2);
 }
@@ -195,7 +199,7 @@
 }
 
 .signal-card {
-  width: 11.5rem;
+  width: 13.5rem;
   position: absolute;
   right: 0;
   bottom: 0;
@@ -205,7 +209,7 @@
   backdrop-filter: blur(12px);
   color: var(--color-muted);
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.75rem;
 }
 
 .signal-card p {
@@ -214,8 +218,8 @@
 
 .signal-card span {
   display: block;
-  color: var(--color-cyan);
-  font-size: 0.68rem;
+  color: var(--color-cyan-strong);
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -254,6 +258,8 @@
 }
 
 .project {
+  display: flex;
+  flex-direction: column;
   min-height: 17rem;
   padding: clamp(1.4rem, 3vw, 2rem);
   position: relative;
@@ -263,6 +269,11 @@
     radial-gradient(circle at 105% 105%, rgba(34, 165, 213, 0.1), transparent 35%),
     linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(238, 248, 252, 0.82));
   box-shadow: 0 1.15rem 3rem rgba(42, 117, 151, 0.09);
+}
+
+.project > [data-case-trigger] {
+  align-self: flex-start;
+  margin-top: auto;
 }
 
 .project::after {
@@ -278,14 +289,10 @@
   pointer-events: none;
 }
 
-.project--featured {
-  min-height: 53rem;
-}
-
 .project__index {
-  color: var(--color-cyan);
+  color: var(--color-cyan-strong);
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
 }
 
@@ -293,7 +300,7 @@
   max-width: 34rem;
   color: #376779 !important;
   font-family: var(--font-mono);
-  font-size: 0.64rem;
+  font-size: 0.75rem;
   letter-spacing: 0.025em;
 }
 
@@ -303,10 +310,6 @@
   font-size: clamp(1.65rem, 3vw, 2.75rem);
   line-height: 1.03;
   letter-spacing: -0.04em;
-}
-
-.project--featured h3 {
-  margin-top: 15rem;
 }
 
 .project > p:not(.project__index),
@@ -336,12 +339,50 @@
   display: none;
 }
 
+.project--expanded .case-panel--evidence {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.project--expanded .case-evidence {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.case-copy > h4:first-child {
+  margin-top: 0;
+}
+
 [data-case-panel] h4 {
   margin-bottom: 0.25rem;
-  color: var(--color-cyan);
+  color: var(--color-cyan-strong);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.case-evidence {
+  margin: 0 0 1.5rem;
+}
+
+.case-evidence img {
+  width: 100%;
+  display: block;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-small);
+  background: #ffffff;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.case-evidence figcaption {
+  margin-top: 0.65rem;
+  color: var(--color-muted);
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  text-transform: uppercase;
+  line-height: 1.45;
 }
 
 .capability-grid {
@@ -384,6 +425,16 @@
   color: var(--color-muted);
 }
 
+.capability-grid .capability__evidence {
+  margin: 1.25rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-cyan-strong);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
 .timeline {
   max-width: 56rem;
   margin: 3rem 0 0;
@@ -415,9 +466,9 @@
 }
 
 .timeline time {
-  color: var(--color-cyan);
+  color: var(--color-cyan-strong);
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
 }
 
 .timeline h3 {
@@ -439,7 +490,7 @@
 
 .about .section-label {
   margin: 0 0 0.75rem;
-  color: var(--color-mint);
+  color: var(--color-mint-strong);
   font-size: 0.9rem;
   font-weight: 700;
 }
@@ -492,8 +543,9 @@
 }
 
 .contact h2 {
-  max-width: 13ch;
+  max-width: none;
   margin-inline: auto;
+  white-space: nowrap;
 }
 
 .contact > p {

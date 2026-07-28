@@ -52,6 +52,13 @@ button {
   outline-offset: 4px;
 }
 
+.section h2[tabindex="-1"]:focus-visible {
+  width: fit-content;
+  outline-width: 2px;
+  outline-offset: 5px;
+  border-radius: 0.12em;
+}
+
 .skip-link {
   position: fixed;
   left: 1rem;
