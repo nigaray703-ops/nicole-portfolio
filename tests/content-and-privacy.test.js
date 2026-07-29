@@ -46,10 +46,9 @@ describe("public portfolio contract", () => {
   });
 
   it("omits private phone and Nicole Universe dependencies", () => {
-    expect(html).not.toContain("+64 20 476 4396");
+    expect(html).not.toMatch(/\+64\s*2\d(?:[\s-]*\d){7,9}/);
     expect(html).not.toContain("nicole-universe");
     expect(html).not.toContain("owner-admin");
-    expect(html).not.toContain("Supabase");
   });
 
   it("offers a privacy-safe public CV download", () => {
@@ -60,27 +59,27 @@ describe("public portfolio contract", () => {
     expect(cvLink.textContent.trim()).toBe("Download CV");
   });
 
-  it("contains the four approved case studies", () => {
-    const projects = [
+  it("presents the four Master CV-backed primary case studies", () => {
+    const document = new JSDOM(html).window.document;
+    const titles = [...document.querySelectorAll("#work .project > h3")].map(
+      (heading) => heading.textContent.trim(),
+    );
+
+    expect(titles).toEqual([
       "Technology Innovation Internship",
-      "PawPal Health",
-      "GlobeMate",
-      "AI-assisted Job Application Tracker",
-    ];
-    projects.forEach((project) => expect(html).toContain(project));
+      "Career Command Center",
+      "Harry Potter Knowledge Assistant",
+      "Ana Tilim",
+    ]);
   });
 
-  it("shows real visual evidence for the two priority case studies", () => {
+  it("keeps the verified internship journey evidence", () => {
     const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
     const internshipEvidence = document.querySelector(
       '#case-internship img[src="/case-studies/stemx500-user-journey.png"]',
     );
-    const pawpalEvidence = document.querySelector(
-      '#case-pawpal img[src="/case-studies/pawpal-prototype.png"]',
-    );
 
     expect(internshipEvidence?.getAttribute("alt")).toContain("user journey");
-    expect(pawpalEvidence?.getAttribute("alt")).toContain("PawPal Health");
   });
 
   it("keeps the current-focus signal free of a numeric metric", () => {
@@ -129,22 +128,48 @@ describe("public portfolio contract", () => {
     expect(document.querySelector("#leadership")).not.toBeNull();
   });
 
-  it("contains exact recruiter-facing project context", () => {
+  it("contains current recruiter-facing project context", () => {
     [
-      "STEMX500 · 400+ hours · Nov 2025–Feb 2026 · Wix",
-      "COMPX500 · Sep–Oct 2025 · Proto.io",
-      "MNNGT544 · Jul–Oct 2025 · Multidisciplinary team",
-      "Personal project · Workflow design · AI-assisted web development",
+      "Academic internship · A+ · Approximately 400 hours · Nov 2025–Feb 2026 · Wix",
+      "Personal project · Jun 2026–Present · JavaScript · Supabase",
+      "COMPX500 · A+ · Aug–Sep 2025 · Python · Pandas",
+      "Personal project · Jul 2026–Present · JavaScript · Supabase",
     ].forEach((metadata) => expect(html).toContain(metadata));
   });
 
-  it("uses the evidence-safe GlobeMate outcome", () => {
-    expect(html).toContain(
-      "Contributed to business-case development and concept validation within a multidisciplinary team.",
+  it("uses scoped internship ownership and duration", () => {
+    expect(html).toContain("student-led");
+    expect(html).toContain("approximately 400 hours");
+    expect(html).toContain("Owned the puzzle interaction");
+    expect(html).not.toContain("400+ hours");
+  });
+
+  it("uses current evidence without conflicting course codes", () => {
+    expect(html).toContain("16,245 rows");
+    expect(html).toContain("464 interface states");
+    expect(html).toContain("COMPX500 · A+");
+    expect(html).not.toContain("MNNGT544");
+    expect(html).not.toContain("MNMGT544");
+  });
+
+  it("publishes recruiter-relevant contact facts without the private phone", () => {
+    expect(html).toContain("Full New Zealand work rights until 25 March 2029");
+    expect(html).toContain("https://github.com/nigaray703-ops");
+    expect(html).not.toMatch(/\+64\s*2\d(?:[\s-]*\d){7,9}/);
+  });
+
+  it("uses stable case identifiers for the selected evidence", () => {
+    const document = new JSDOM(html).window.document;
+    const ids = [...document.querySelectorAll("[data-case-trigger]")].map(
+      (trigger) => trigger.dataset.caseTrigger,
     );
-    expect(html).not.toContain(
-      "Contributed to a validated multidisciplinary product concept",
-    );
+
+    expect(ids).toEqual([
+      "internship",
+      "career-command",
+      "harry-potter",
+      "ana-tilim",
+    ]);
   });
 
   it("includes Business Analyst and Office evidence", () => {
