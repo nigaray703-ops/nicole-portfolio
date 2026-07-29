@@ -118,9 +118,13 @@ describe("public portfolio contract", () => {
   it("separates experience, education, leadership, and about", () => {
     const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
     const experienceItems = document.querySelectorAll("#experience .timeline > li");
+    const educationText = document.querySelector("#education").textContent;
 
     expect(experienceItems).toHaveLength(1);
     expect(document.querySelector("#education-title").textContent.trim()).toBe("Education");
+    expect(document.querySelectorAll("#education .timeline > li")).toHaveLength(2);
+    expect(educationText).not.toContain("Academic English");
+    expect(educationText).not.toContain("Levels 7 and 8");
     expect(document.querySelector("#leadership-title").textContent.trim()).toBe(
       "Leadership & Community",
     );
@@ -419,6 +423,12 @@ describe("public portfolio contract", () => {
     expect(contactHeadingStyle.whiteSpace).toBe("nowrap");
     expect(responsiveCss).toMatch(
       /@media \(max-width:\s*680px\)[\s\S]*\.contact h2\s*{[^}]*white-space:\s*normal;/,
+    );
+  });
+
+  it("gives the contact introduction enough width to render in two lines", () => {
+    expect(componentsCss).toMatch(
+      /\.contact\s*>\s*p\s*{[^}]*max-width:\s*40rem;/,
     );
   });
 

@@ -549,7 +549,7 @@
 }
 
 .contact > p {
-  max-width: 30rem;
+  max-width: 40rem;
   margin: 1.25rem auto 2rem;
   color: var(--color-muted);
 }

@@ -28,6 +28,8 @@ class PublicCvContractTest(unittest.TestCase):
     def test_uses_current_academic_and_internship_facts(self):
         self.assertIn("Approximately 400 hours", self.text)
         self.assertNotIn("400+ hours", self.text)
+        self.assertNotIn("Academic English", self.text)
+        self.assertNotIn("Levels 7 and 8", self.text)
         if "PawPal Health" in self.text:
             self.assertIn("ENGME585", self.text)
             self.assertNotIn("COMPX500", self.text)

@@ -383,12 +383,6 @@ def build_cv():
     )
     add_role_header(
         document,
-        "Certificates of Attainment in Academic English - Levels 7 and 8",
-        "University of Waikato, New Zealand",
-        "2024 - 2025",
-    )
-    add_role_header(
-        document,
         "Bachelor of Management (Accounting)",
         "Dalian Jiaotong University, China",
         "2020 - 2024",
