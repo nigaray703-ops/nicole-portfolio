@@ -105,7 +105,7 @@ it("uses scoped internship ownership and duration", () => {
 it("publishes recruiter-relevant contact facts without the private phone", () => {
   expect(html).toContain("Full New Zealand work rights until 25 March 2029");
   expect(html).toContain("https://github.com/nigaray703-ops");
-  expect(html).not.toContain("+64 20 476 4396");
+  expect(html).not.toMatch(/\+64\s*2\d(?:[\s-]*\d){7,9}/);
 });
 
 it("uses current evidence without conflicting course codes", () => {
@@ -217,7 +217,9 @@ class PublicCvContractTest(unittest.TestCase):
 
     def test_preserves_public_privacy_boundary(self):
         self.assertIn("Full New Zealand work rights until 25 March 2029", self.text)
-        self.assertNotIn("+64 20 476 4396", self.text)
+        self.assertIsNone(
+            re.search(r"\+64\s*2\d(?:[\s-]*\d){7,9}", self.text),
+        )
 
 
 if __name__ == "__main__":

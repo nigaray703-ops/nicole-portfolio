@@ -232,19 +232,19 @@ def build_cv():
     add_section_heading(document, "Professional Summary")
     add_body(
         document,
-        "Master of Technology Innovation in Business graduate with Distinction and practical experience translating stakeholder needs into requirements, workflows, structured data, prototypes and functional digital products. Brings hands-on experience in platform evaluation, testing, documentation, data organisation and iterative process improvement across internship, academic and independently built projects.",
+        "Graduate business systems and technology professional with a Master of Technology Innovation in Business (Distinction) and practical experience across an approximately 400-hour academic internship, requirements and process analysis, application testing, data organisation, stakeholder documentation and privacy-conscious digital products.",
         after=4,
     )
     add_body(
         document,
-        "Targeting graduate and junior opportunities across business analysis, business systems, application support, implementation coordination, functional consulting, master data, data quality, reporting and continuous improvement.",
+        "Combines business, systems, data, AI and user-centred design capability. Targeting graduate and junior opportunities across business analysis, business systems, implementation, application support, data quality, reporting and continuous improvement.",
         after=4,
     )
 
     add_section_heading(document, "Core Capabilities")
     add_body(
         document,
-        "Business analysis: requirements gathering, stakeholder communication, process mapping, gap analysis, user stories and functional requirements. Systems and implementation: platform evaluation, workflow modelling, testing coordination, feedback triage and documentation. Data and reporting: data cleaning, validation, structured records, lookups, pivot tables and dashboard design. Improvement: issue identification, workflow optimisation and iterative refinement.",
+        "Business analysis: requirements, user stories, process and workflow mapping, gap and option analysis. Systems and implementation: solution evaluation, testing, issue tracking, user guidance and documentation. Data and reporting: collection, cleaning, validation, reconciliation, Excel analysis, dashboards and structured records. Improvement: user research, accessibility testing, feedback synthesis and workflow refinement.",
         after=4,
     )
 
@@ -252,27 +252,27 @@ def build_cv():
     add_role_header(
         document,
         "Technology Innovation Intern - Business Analysis and Digital Delivery",
-        "University of Waikato (STEMX500)",
-        "Nov 2025 - Feb 2026 | 400+ hours",
+        "University of Waikato | Academic, A+",
+        "Nov 2025 - Feb 2026 | Approximately 400 hours",
     )
     add_bullet(
         document,
-        "Translated project objectives and stakeholder needs into user journeys, interaction flows and functional requirements for an interactive cultural storytelling experience.",
+        "Helped a student team deliver Ko ahau te awa, an interactive cultural storytelling prototype combining a map, puzzle interaction, responsive layouts and optional audio narration.",
     )
     add_bullet(
         document,
-        "Built and refined a responsive Wix prototype across desktop and mobile, using structured platform evaluation to resolve implementation constraints.",
+        "Translated project goals and feedback into user journeys, interaction flows, functional requirements and structured delivery tasks; owned the puzzle interaction from concept through refinement.",
     )
     add_bullet(
         document,
-        "Applied usability and accessibility principles, including clarity-first interaction, cognitive-load reduction and intuitive navigation.",
+        "Compared Wix and Canva constraints, supported responsive Wix implementation across desktop and mobile, and applied clarity, accessibility and cognitive-load principles.",
     )
     add_bullet(
         document,
-        "Coordinated testing, feedback synthesis and iterative refinement; delivered the final prototype, documentation and presentation.",
+        "Supported testing, issue identification and repeated correction; maintained project records and helped deliver the final prototype, report and presentation on schedule.",
     )
 
-    add_section_heading(document, "Selected Digital Projects")
+    add_section_heading(document, "Selected Business Systems Projects")
     add_role_header(
         document,
         "Career Command Center - Bilingual Job Application Tracker",
@@ -281,15 +281,56 @@ def build_cv():
     )
     add_bullet(
         document,
-        "Defined requirements, workflow stages, status categories and information architecture for managing job applications and follow-up actions.",
+        "Defined business rules, data fields, status categories, workflows and information architecture for centralising applications, candidate portals and follow-up information.",
     )
     add_bullet(
         document,
-        "Designed dashboard analytics, filtering, sorting and structured records; implemented local backup, restore and privacy-safe demo data.",
+        "Built dashboard metrics, conversion indicators, search, A-Z navigation, filtering, sorting, grouping and responsive record management.",
     )
     add_bullet(
         document,
-        "Iteratively tested and refined the responsive interface using real-world workflow needs.",
+        "Implemented Google authentication and user-scoped Supabase access for the private version; separated the public demo with fictional records, simulated sign-in and disabled cloud access.",
+    )
+
+    add_role_header(
+        document,
+        "Ana Tilim - Mobile-First Uyghur Language Learning Platform",
+        "Independent project",
+        "Jul 2026 - Present",
+    )
+    add_bullet(
+        document,
+        "Structured multilingual curriculum and course data for Uyghur script, ULY transliteration, vocabulary, grammar, practice activities and reading content.",
+    )
+    add_bullet(
+        document,
+        "Implemented RTL support, human-recorded audio, listening and dictation, offline progress, backup and restore, plus UID-scoped Supabase synchronisation with Row Level Security.",
+    )
+    add_bullet(
+        document,
+        "Created a verification runner covering course-data integrity, transliteration, audio manifests, interactions, authentication, cloud sync and full-content rendering across 464 interface states.",
+    )
+
+    document.add_page_break()
+
+    add_section_heading(document, "Selected Data and Application Projects")
+    add_role_header(
+        document,
+        "Harry Potter Knowledge Assistant - Curated AI Dataset",
+        "COMPX500 | A+",
+        "Aug 2025 - Sep 2025",
+    )
+    add_bullet(
+        document,
+        "Collected and integrated data from Wikipedia, Kaggle and Fandom using Python, BeautifulSoup, Pandas, Google Colab and Jupyter Notebook.",
+    )
+    add_bullet(
+        document,
+        "Cleaned schemas, removed duplicates, managed aliases, linked subjects and expanded the validated dataset to 16,245 rows.",
+    )
+    add_bullet(
+        document,
+        "Packaged a constrained upload bundle with a manifest and validation checks; designed source-aware, off-topic and uncertainty handling and compared cloud/local model results.",
     )
 
     add_role_header(
@@ -300,48 +341,15 @@ def build_cv():
     )
     add_bullet(
         document,
-        "Defined a mobile-first cash-planning workflow covering income, recurring expenses, estimated utilities and projected balances.",
+        "Translated cash-planning needs into editable profile and transaction models, recurring costs, income, safety thresholds and projected balances.",
     )
     add_bullet(
         document,
-        "Designed the responsive dashboard and implemented Firebase Authentication, private Firestore synchronisation and a public Demo mode.",
-    )
-
-    document.add_page_break()
-
-    add_section_heading(document, "Selected University Projects")
-    add_role_header(
-        document,
-        "PawPal Health - AI-enabled Dog Wellbeing Concept",
-        "University of Waikato (COMPX500)",
-        "Sep 2025 - Oct 2025",
+        "Implemented Firebase Authentication and UID-scoped Firestore storage, with a local Demo mode and explicit separation between local and authenticated cloud states.",
     )
     add_bullet(
         document,
-        "Translated pet-owner needs into feature requirements for activity tracking, symptom monitoring, wellbeing insights and AI-assisted feedback.",
-    )
-    add_bullet(
-        document,
-        "Designed a dashboard that presents behavioural and physiological information clearly and created interactive prototype screens in Proto.io.",
-    )
-    add_bullet(
-        document,
-        "Presented the product concept, user value, design rationale and innovation opportunity.",
-    )
-
-    add_role_header(
-        document,
-        "GlobeMate - Personalised Travel Planning Concept",
-        "University of Waikato (MNMGT544)",
-        "Jul 2025 - Oct 2025",
-    )
-    add_bullet(
-        document,
-        "Conducted market research and customer segmentation for a travel concept combining weather insight, budget estimation and memory mapping.",
-    )
-    add_bullet(
-        document,
-        "Shaped feature logic and the value proposition, contributing to business-case development and concept validation in a multidisciplinary team.",
+        "Delivered a responsive Progressive Web App and a separate local SwiftUI companion prototype with JSON-backed on-device persistence.",
     )
 
     add_section_heading(document, "Leadership and Community")
@@ -371,19 +379,25 @@ def build_cv():
         document,
         "Master of Technology Innovation in Business - Distinction",
         "University of Waikato, New Zealand",
-        "Feb 2025 - Feb 2026",
+        "2025 - 2026",
+    )
+    add_role_header(
+        document,
+        "Certificates of Attainment in Academic English - Levels 7 and 8",
+        "University of Waikato, New Zealand",
+        "2024 - 2025",
     )
     add_role_header(
         document,
         "Bachelor of Management (Accounting)",
         "Dalian Jiaotong University, China",
-        "Sep 2020 - Jul 2024",
+        "2020 - 2024",
     )
 
     add_section_heading(document, "Tools and Technical Skills")
     add_body(
         document,
-        "Business systems and data: Excel data cleaning, sorting, filtering, basic formulas, lookup functions and pivot tables; Word documentation; PowerPoint reporting and presentations. Analysis and design: Figma, Miro, Proto.io, Wix, Jira and Confluence (basic exposure). Web and data tools: HTML, CSS, JavaScript, Firebase, Firestore, GitHub, basic Python and Jupyter Notebook.",
+        "Analysis and reporting: requirements analysis, process maps, functional specifications, test support, Excel cleaning, formulas, lookups, pivot tables, validation, reconciliation and dashboard metrics. Product and web: Figma, Miro, Wix, HTML, CSS, JavaScript, PWA, Electron, SwiftUI prototypes, Firebase, Firestore, Supabase and RLS. AI and data: Python, Pandas, Jupyter, Google Colab, BeautifulSoup, curated datasets and cloud/local LLM evaluation. Tools: Microsoft 365, GitHub, Jira and Confluence (basic), SQL and Power BI (foundational).",
         after=3,
     )
 
@@ -391,6 +405,13 @@ def build_cv():
     add_body(
         document,
         "Uyghur - native | Mandarin Chinese - native | English - professional working proficiency | Korean - basic conversational | Te Reo Maori - introductory",
+        after=2,
+    )
+
+    add_section_heading(document, "Additional Information")
+    add_body(
+        document,
+        "Auckland-based | Full New Zealand driver licence | Available immediately and for business travel",
         after=0,
     )
 
