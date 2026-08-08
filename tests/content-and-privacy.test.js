@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { JSDOM } from "jsdom";
 import { describe, expect, it } from "vitest";
@@ -12,6 +12,15 @@ const tokensCss = readFileSync(resolve("src/styles/tokens.css"), "utf8");
 
 function cssHexToken(css, name) {
   return css.match(new RegExp(`${name}:\\s*(#[0-9a-f]{6})`, "i"))?.[1];
+}
+
+function pngDimensions(path) {
+  const buffer = readFileSync(resolve(path));
+  expect(buffer.subarray(1, 4).toString("ascii")).toBe("PNG");
+  return {
+    width: buffer.readUInt32BE(16),
+    height: buffer.readUInt32BE(20),
+  };
 }
 
 function relativeLuminance(hex) {
@@ -217,6 +226,20 @@ describe("public portfolio contract", () => {
 
     expect(favicon).not.toBeNull();
     expect(favicon.getAttribute("href")).toBe("data:,");
+  });
+
+  it("builds the approved Orbit N favicon asset family", () => {
+    for (const path of [
+      "public/nicole-portfolio-favicon.svg",
+      "public/nicole-portfolio-favicon-32.png",
+      "public/nicole-portfolio-icon-192.png",
+      "public/nicole-portfolio-apple-touch-icon.png",
+    ]) expect(existsSync(resolve(path))).toBe(true);
+
+    expect(pngDimensions("public/nicole-portfolio-favicon-32.png")).toEqual({ width: 32, height: 32 });
+    expect(pngDimensions("public/nicole-portfolio-icon-192.png")).toEqual({ width: 192, height: 192 });
+    expect(pngDimensions("public/nicole-portfolio-apple-touch-icon.png")).toEqual({ width: 180, height: 180 });
+    expect(readFileSync(resolve("public/nicole-portfolio-favicon.svg"), "utf8")).toContain("Orbit N");
   });
 
   it("keeps the About label style more specific than generic About paragraph rules", () => {
