@@ -220,12 +220,22 @@ describe("public portfolio contract", () => {
     });
   });
 
-  it("declares an inline favicon so browsers do not request a missing asset", () => {
+  it("declares the approved Orbit N favicon links", () => {
     const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
-    const favicon = document.querySelector('link[rel="icon"]');
+    const icons = [...document.querySelectorAll('link[rel="icon"]')].map((link) => ({
+      href: link.getAttribute("href"),
+      sizes: link.getAttribute("sizes"),
+      type: link.getAttribute("type"),
+    }));
 
-    expect(favicon).not.toBeNull();
-    expect(favicon.getAttribute("href")).toBe("data:,");
+    expect(icons).toEqual([
+      { href: "/nicole-portfolio-favicon.svg", sizes: null, type: "image/svg+xml" },
+      { href: "/nicole-portfolio-favicon-32.png", sizes: "32x32", type: "image/png" },
+      { href: "/nicole-portfolio-icon-192.png", sizes: "192x192", type: "image/png" },
+    ]);
+    const apple = document.querySelector('link[rel="apple-touch-icon"]');
+    expect(apple?.getAttribute("href")).toBe("/nicole-portfolio-apple-touch-icon.png");
+    expect(apple?.getAttribute("sizes")).toBe("180x180");
   });
 
   it("builds the approved Orbit N favicon asset family", () => {
