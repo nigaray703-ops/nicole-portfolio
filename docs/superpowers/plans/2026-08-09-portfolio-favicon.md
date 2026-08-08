@@ -21,7 +21,7 @@
 ### Task 1: Define the Orbit N asset contract
 
 **Files:**
-- Modify: `tests/content-and-privacy.test.js:1-4,214-220`
+- Modify: `tests/content-and-privacy.test.js:1-4, after the existing favicon test`
 - Create: `public/nicole-portfolio-favicon.svg`
 - Create: `scripts/build_favicons.py`
 - Create by builder: `public/nicole-portfolio-favicon-32.png`
@@ -32,7 +32,7 @@
 - Consumes: the approved Orbit N geometry and existing Portfolio palette.
 - Produces: four public icon assets and a deterministic `build_favicons.py` entry point.
 
-- [ ] **Step 1: Replace the blank-favicon test with the failing public asset contract**
+- [ ] **Step 1: Add a failing asset-only contract and leave the existing HTML-link test unchanged**
 
 Update the Node import and add a PNG header reader:
 
@@ -49,25 +49,10 @@ function pngDimensions(path) {
 }
 ```
 
-Replace the existing `declares an inline favicon` test with:
+Keep the existing `declares an inline favicon` test unchanged for Task 2. Add this separate test after it:
 
 ```js
-it("publishes the approved Orbit N favicon family", () => {
-  const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
-  const icons = [...document.querySelectorAll('link[rel="icon"]')].map((link) => ({
-    href: link.getAttribute("href"),
-    sizes: link.getAttribute("sizes"),
-    type: link.getAttribute("type"),
-  }));
-
-  expect(icons).toEqual([
-    { href: "/nicole-portfolio-favicon.svg", sizes: null, type: "image/svg+xml" },
-    { href: "/nicole-portfolio-favicon-32.png", sizes: "32x32", type: "image/png" },
-    { href: "/nicole-portfolio-icon-192.png", sizes: "192x192", type: "image/png" },
-  ]);
-  expect(document.querySelector('link[rel="apple-touch-icon"]')?.getAttribute("href"))
-    .toBe("/nicole-portfolio-apple-touch-icon.png");
-
+it("builds the approved Orbit N favicon asset family", () => {
   for (const path of [
     "public/nicole-portfolio-favicon.svg",
     "public/nicole-portfolio-favicon-32.png",
@@ -90,7 +75,7 @@ Run:
 PATH="/Users/nigarayaskar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin:/Users/nigarayaskar/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/usr/bin:/bin" pnpm exec vitest run tests/content-and-privacy.test.js
 ```
 
-Expected: FAIL because `index.html` still declares `data:,` and the four icon files do not exist.
+Expected: FAIL because the four icon files do not exist. The existing `data:,` HTML-link test remains green.
 
 - [ ] **Step 3: Create the exact scalable Orbit N source**
 
@@ -187,13 +172,43 @@ Expected: the three PNG files exist at the exact dimensions in `OUTPUTS`.
 
 **Files:**
 - Modify: `index.html:11`
-- Test: `tests/content-and-privacy.test.js`
+- Modify: `tests/content-and-privacy.test.js:214-220`
 
 **Interfaces:**
 - Consumes: the four assets produced by Task 1.
 - Produces: browser-discoverable icon declarations at stable root-relative URLs.
 
-- [ ] **Step 1: Replace the blank declaration with explicit icon links**
+- [ ] **Step 1: Replace the blank-link test with a failing HTML-link contract**
+
+Replace the existing `declares an inline favicon` test with:
+
+```js
+it("declares the approved Orbit N favicon links", () => {
+  const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+  const icons = [...document.querySelectorAll('link[rel="icon"]')].map((link) => ({
+    href: link.getAttribute("href"),
+    sizes: link.getAttribute("sizes"),
+    type: link.getAttribute("type"),
+  }));
+
+  expect(icons).toEqual([
+    { href: "/nicole-portfolio-favicon.svg", sizes: null, type: "image/svg+xml" },
+    { href: "/nicole-portfolio-favicon-32.png", sizes: "32x32", type: "image/png" },
+    { href: "/nicole-portfolio-icon-192.png", sizes: "192x192", type: "image/png" },
+  ]);
+  const apple = document.querySelector('link[rel="apple-touch-icon"]');
+  expect(apple?.getAttribute("href")).toBe("/nicole-portfolio-apple-touch-icon.png");
+  expect(apple?.getAttribute("sizes")).toBe("180x180");
+});
+```
+
+- [ ] **Step 2: Run the focused test and verify RED**
+
+Run the Task 1 focused Vitest command.
+
+Expected: FAIL because `index.html` still declares only `data:,`.
+
+- [ ] **Step 3: Replace the blank declaration with explicit icon links**
 
 Replace `<link rel="icon" href="data:,">` with:
 
@@ -204,13 +219,13 @@ Replace `<link rel="icon" href="data:,">` with:
 <link rel="apple-touch-icon" sizes="180x180" href="/nicole-portfolio-apple-touch-icon.png">
 ```
 
-- [ ] **Step 2: Run the focused test and verify GREEN**
+- [ ] **Step 4: Run the focused test and verify GREEN**
 
 Run the Task 1 focused Vitest command again.
 
 Expected: PASS, including the Orbit N asset contract.
 
-- [ ] **Step 3: Run the complete test and build gates**
+- [ ] **Step 5: Run the complete test and build gates**
 
 Run:
 
@@ -222,7 +237,7 @@ git diff --check
 
 Expected: all Vitest files pass, Vite exits 0, and `git diff --check` is silent.
 
-- [ ] **Step 4: Commit the focused Portfolio change**
+- [ ] **Step 6: Commit the focused Portfolio change**
 
 ```bash
 git add index.html tests/content-and-privacy.test.js scripts/build_favicons.py public/nicole-portfolio-favicon.svg public/nicole-portfolio-favicon-32.png public/nicole-portfolio-icon-192.png public/nicole-portfolio-apple-touch-icon.png
