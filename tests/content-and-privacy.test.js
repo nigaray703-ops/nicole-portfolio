@@ -78,8 +78,45 @@ describe("public portfolio contract", () => {
       "Technology Innovation Internship",
       "Career Command Center",
       "Harry Potter Knowledge Assistant",
-      "Ana Tilim",
+      "Ana Tilim / Uyghur Tili",
     ]);
+  });
+
+  it("presents Ana Tilim and Uyghur Tili as one dual-edition case study", () => {
+    const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
+    const project = document
+      .querySelector('[data-case-trigger="ana-tilim"]')
+      .closest("article.project");
+    const projectCopy = project.textContent.replace(/\s+/g, " ").trim();
+    const links = [...project.querySelectorAll("a")].map((link) => ({
+      href: link.href,
+      label: link.textContent.trim(),
+    }));
+
+    expect(project.querySelector("h3").textContent.trim()).toBe(
+      "Ana Tilim / Uyghur Tili",
+    );
+    expect(project.querySelector(".project__meta").textContent.trim()).toBe(
+      "Personal project · Jul 2026–Present · JavaScript",
+    );
+    expect(projectCopy).toContain("two-edition, mobile-first Uyghur language learning platform");
+    expect(projectCopy).toContain("12-unit global curriculum and an 11-unit China edition");
+    expect(projectCopy).toContain("Tencent CloudBase");
+    expect(projectCopy).toContain("UID-scoped Supabase sync");
+    expect(projectCopy).not.toContain("464 interface states");
+    expect(links).toEqual([
+      { href: "https://ana-tilim.vercel.app/", label: "Global edition" },
+      {
+        href: "https://uyghur-tili-uyghur-tili-d4gv9odyhe312c9c5.webapps.tcloudbase.com/",
+        label: "China edition",
+      },
+      { href: "https://github.com/nigaray703-ops/ana-tilim", label: "Ana Tilim GitHub" },
+      { href: "https://github.com/nigaray703-ops/uyghur-tili", label: "Uyghur Tili GitHub" },
+    ]);
+
+    expect(document.querySelector("#capabilities").textContent).toContain(
+      "Ana Tilim / Uyghur Tili dual-edition verification",
+    );
   });
 
   it("keeps the verified internship journey evidence", () => {
@@ -146,7 +183,7 @@ describe("public portfolio contract", () => {
       "Academic internship · A+ · Approximately 400 hours · Nov 2025–Feb 2026 · Wix",
       "Personal project · Jun 2026–Present · JavaScript · Supabase",
       "COMPX500 · A+ · Aug–Sep 2025 · Python · Pandas",
-      "Personal project · Jul 2026–Present · JavaScript · Supabase",
+      "Personal project · Jul 2026–Present · JavaScript",
     ].forEach((metadata) => expect(html).toContain(metadata));
   });
 
@@ -159,7 +196,7 @@ describe("public portfolio contract", () => {
 
   it("uses current evidence without conflicting course codes", () => {
     expect(html).toContain("16,245 rows");
-    expect(html).toContain("464 interface states");
+    expect(html).not.toContain("464 interface states");
     expect(html).toContain("COMPX500 · A+");
     expect(html).not.toContain("MNNGT544");
     expect(html).not.toContain("MNMGT544");
