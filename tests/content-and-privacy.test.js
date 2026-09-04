@@ -100,6 +100,7 @@ describe("public portfolio contract", () => {
       "Personal project · Jul 2026–Present · JavaScript",
     );
     expect(projectCopy).toContain("two-edition, mobile-first Uyghur language learning platform");
+    expect(projectCopy).toContain("phones, tablets and desktop computers");
     expect(projectCopy).toContain("12-unit global curriculum and an 11-unit China edition");
     expect(projectCopy).toContain("Tencent CloudBase");
     expect(projectCopy).toContain("UID-scoped Supabase sync");
@@ -164,9 +165,13 @@ describe("public portfolio contract", () => {
   it("separates experience, education, leadership, and about", () => {
     const document = new JSDOM(html, { url: "http://localhost/" }).window.document;
     const experienceItems = document.querySelectorAll("#experience .timeline > li");
+    const experienceText = document.querySelector("#experience").textContent.replace(/\s+/g, " ").trim();
     const educationText = document.querySelector("#education").textContent;
 
-    expect(experienceItems).toHaveLength(1);
+    expect(experienceItems).toHaveLength(2);
+    expect(experienceText).toContain("AI Expert – Uyghur");
+    expect(experienceText).toContain("LILT · Independent contractor · Remote");
+    expect(experienceText).not.toContain("AI-88");
     expect(document.querySelector("#education-title").textContent.trim()).toBe("Education");
     expect(document.querySelectorAll("#education .timeline > li")).toHaveLength(2);
     expect(educationText).not.toContain("Academic English");
