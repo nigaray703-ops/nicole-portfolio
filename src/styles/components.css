@@ -69,8 +69,10 @@
   margin: 0 0 1.5rem;
   font-size: clamp(3.2rem, 5.3vw, 4.85rem);
   font-weight: 580;
-  line-height: 0.94;
-  letter-spacing: -0.065em;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .hero h1 span {
@@ -86,7 +88,7 @@
 
 .hero__meta {
   font-family: var(--font-mono);
-  font-size: 0.8rem !important;
+  font-size: 0.875rem !important;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -214,6 +216,7 @@
 
 .signal-card p {
   margin-bottom: 0;
+  font-size: 0.875rem;
 }
 
 .signal-card span {
@@ -228,8 +231,9 @@
 .section h2 {
   margin: 0;
   font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1;
-  letter-spacing: -0.055em;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
 #capabilities-title::after,
@@ -292,7 +296,7 @@
 .project__index {
   color: var(--color-cyan-strong);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   text-transform: uppercase;
 }
 
@@ -300,15 +304,15 @@
   max-width: 34rem;
   color: #376779 !important;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   letter-spacing: 0.025em;
 }
 
 .project h3 {
   max-width: 16ch;
-  margin: 4rem 0 1rem;
+  margin: 2rem 0 1rem;
   font-size: clamp(1.65rem, 3vw, 2.75rem);
-  line-height: 1.03;
+  line-height: 1.12;
   letter-spacing: -0.04em;
 }
 
@@ -359,7 +363,7 @@
   margin-bottom: 0.25rem;
   color: var(--color-cyan-strong);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
 }
 
@@ -381,7 +385,7 @@
   margin-top: 0.65rem;
   color: var(--color-muted);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.875rem;
   line-height: 1.45;
 }
 
@@ -410,7 +414,7 @@
   display: block;
   width: 2.25rem;
   height: 2px;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.25rem;
   background: var(--color-cyan);
 }
 
@@ -430,9 +434,8 @@
   padding-top: 0.85rem;
   border-top: 1px solid var(--color-line);
   color: var(--color-cyan-strong);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  line-height: 1.45;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .timeline {
@@ -468,7 +471,7 @@
 .timeline time {
   color: var(--color-cyan-strong);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
 }
 
 .timeline h3 {
@@ -545,11 +548,12 @@
 .contact h2 {
   max-width: none;
   margin-inline: auto;
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
 .contact > p {
-  max-width: 40rem;
+  max-width: 48rem;
+  text-wrap: pretty;
   margin: 1.25rem auto 2rem;
   color: var(--color-muted);
 }

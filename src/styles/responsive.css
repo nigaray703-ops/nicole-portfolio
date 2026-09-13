@@ -5,18 +5,31 @@
   }
 
   .hero {
-    padding-block: 5rem;
+    padding-block: 3.5rem;
     overflow: clip;
   }
 
   .hero__portrait {
-    min-height: 31rem;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
   }
 
   .hero__portrait img,
   .portrait-fallback {
-    width: min(22rem, 88%);
-    height: 28rem;
+    position: relative;
+    width: min(18rem, 48%);
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  .signal-card {
+    position: relative;
+    width: min(18rem, 44%);
+    flex-shrink: 0;
+    padding: 1.25rem;
   }
 
   .project-list {
@@ -129,11 +142,13 @@
   }
 
   .hero h1 {
-    font-size: clamp(2.65rem, 13vw, 3.6rem);
+    max-width: 16ch;
+    font-size: clamp(2.25rem, 10.5vw, 3.5rem);
   }
 
   .hero__portrait {
-    min-height: 16rem;
+    gap: 1.25rem;
+    align-items: center;
     order: 2;
   }
 
@@ -149,13 +164,17 @@
   .portrait-fallback {
     left: 0;
     right: auto;
-    width: min(13rem, 66%);
-    height: 14rem;
+    width: 45%;
+    height: auto;
   }
 
   .signal-card {
     right: 0;
     bottom: 0;
+    flex: 1;
+    width: auto;
+    padding: 1rem;
+    font-family: var(--font-sans);
   }
 
   .section-heading {
@@ -176,7 +195,7 @@
 
   .capability-grid article {
     min-height: auto;
-    padding: 1rem;
+    padding: 1.25rem;
   }
 
   .capability-grid article::before {
@@ -185,12 +204,12 @@
 
   .capability-grid h3 {
     margin-bottom: 0.5rem;
-    font-size: 1rem;
+    font-size: 1.125rem;
   }
 
   .capability-grid p {
-    font-size: 0.9rem;
-    line-height: 1.45;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .capability-grid .capability__evidence {
@@ -211,21 +230,32 @@
   }
 
   .project > p:not(.project__index) {
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .project > p.project__meta {
+    font-size: 0.875rem;
   }
 
   .timeline {
     margin-top: 1.5rem;
+    margin-left: 0.35rem;
+    padding-left: 1.25rem;
   }
 
   .timeline li {
     padding-bottom: 1.25rem;
+    padding-left: 0;
+  }
+
+  .timeline li::before {
+    left: -1.52rem;
   }
 
   .timeline p,
   .about p {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .about h2 {

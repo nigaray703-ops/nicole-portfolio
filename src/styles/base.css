@@ -36,6 +36,12 @@ body > * {
 
 a {
   color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+::selection {
+  background: #b9e5ef;
+  color: var(--color-text);
 }
 
 button,

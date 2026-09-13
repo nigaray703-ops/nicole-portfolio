@@ -409,10 +409,10 @@ describe("public portfolio contract", () => {
       /\.project h3,[\s\S]*\.project--featured h3\s*{[^}]*margin-top:\s*1\.25rem;/s,
     );
     expect(narrowMobile).toMatch(
-      /\.capability-grid article\s*{[^}]*min-height:\s*auto;[^}]*padding:\s*1rem;/s,
+      /\.capability-grid article\s*{[^}]*min-height:\s*auto;[^}]*padding:\s*1\.25rem;/s,
     );
     expect(narrowMobile).toMatch(
-      /\.hero__portrait img,[\s\S]*\.portrait-fallback\s*{[^}]*height:\s*14rem;/s,
+      /\.hero__portrait img,[\s\S]*\.portrait-fallback\s*{[^}]*height:\s*auto;/s,
     );
   });
 
@@ -484,7 +484,7 @@ describe("public portfolio contract", () => {
     expect(headerStyle.paddingInline).not.toBe("0");
   });
 
-  it("keeps the contact headline on one line at desktop widths", () => {
+  it("allows the contact headline to wrap safely when space is constrained", () => {
     const dom = new JSDOM(html, { url: "http://localhost/" });
     const style = dom.window.document.createElement("style");
     style.textContent = componentsCss;
@@ -495,7 +495,7 @@ describe("public portfolio contract", () => {
     );
 
     expect(contactHeadingStyle.maxWidth).toBe("none");
-    expect(contactHeadingStyle.whiteSpace).toBe("nowrap");
+    expect(contactHeadingStyle.whiteSpace).not.toBe("nowrap");
     expect(responsiveCss).toMatch(
       /@media \(max-width:\s*680px\)[\s\S]*\.contact h2\s*{[^}]*white-space:\s*normal;/,
     );
@@ -503,7 +503,7 @@ describe("public portfolio contract", () => {
 
   it("gives the contact introduction enough width to render in two lines", () => {
     expect(componentsCss).toMatch(
-      /\.contact\s*>\s*p\s*{[^}]*max-width:\s*40rem;/,
+      /\.contact\s*>\s*p\s*{[^}]*max-width:\s*48rem;/,
     );
   });
 
