@@ -68,22 +68,28 @@ export function initMobileNav(root = document, Observer = globalThis.Intersectio
   };
 
   let sectionObserver = null;
-  if (typeof Observer === "function" && targets.size > 0) {
-    const visibleTargets = new Map();
-    sectionObserver = new Observer(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) visibleTargets.set(entry.target.id, entry);
-          else visibleTargets.delete(entry.target.id);
-        });
-        const current = [...visibleTargets.values()]
-          .sort((left, right) => right.intersectionRatio - left.intersectionRatio)[0];
-        if (current) setActive(current.target.id);
-        else clearActive();
-      },
-      { rootMargin: "-120px 0px -320px", threshold: [0.1, 0.35, 0.6] },
-    );
-    targets.forEach((target) => sectionObserver.observe(target));
+  try {
+    if (typeof Observer === "function" && targets.size > 0) {
+      const visibleTargets = new Map();
+      sectionObserver = new Observer(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) visibleTargets.set(entry.target.id, entry);
+            else visibleTargets.delete(entry.target.id);
+          });
+          const current = [...visibleTargets.values()]
+            .sort((left, right) => right.intersectionRatio - left.intersectionRatio)[0];
+          if (current) setActive(current.target.id);
+          else clearActive();
+        },
+        { rootMargin: "-120px 0px -320px", threshold: [0.1, 0.35, 0.6] },
+      );
+      targets.forEach((target) => sectionObserver.observe(target));
+    }
+  } catch {
+    // Active-section tracking is optional; keep the menu and remaining setup usable.
+    sectionObserver?.disconnect();
+    sectionObserver = null;
   }
 
   toggle.addEventListener("click", onToggle);

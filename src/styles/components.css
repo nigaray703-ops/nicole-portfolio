@@ -44,10 +44,9 @@
 [data-case-trigger],
 [data-case-close] {
   transition:
-    border-color 180ms ease,
-    color 180ms ease,
-    background-color 180ms ease,
-    transform 180ms ease;
+    border-color var(--motion-feedback) var(--motion-ease),
+    color var(--motion-feedback) var(--motion-ease),
+    background-color var(--motion-feedback) var(--motion-ease);
 }
 
 #primary-nav a:hover,
@@ -124,7 +123,6 @@
 [data-case-trigger]:hover,
 [data-case-close]:hover {
   border-color: rgba(49, 200, 170, 0.7);
-  transform: translateY(-2px);
 }
 
 .button--primary {
@@ -373,6 +371,7 @@
 
 .case-evidence img {
   width: 100%;
+  height: auto;
   display: block;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-small);
@@ -575,7 +574,7 @@
   height: 1px;
   position: absolute;
   background: currentColor;
-  transition: transform 180ms ease;
+  transition: transform var(--motion-feedback) var(--motion-ease);
 }
 
 .nav-toggle > span:last-child {
@@ -590,15 +589,14 @@
   transform: rotate(-45deg);
 }
 
-.js [data-reveal] {
-  opacity: 0;
-  transform: translateY(1.25rem);
-  transition:
-    opacity 600ms ease,
-    transform 600ms ease;
-}
+@media (prefers-reduced-motion: no-preference) {
+  /* Reuse the existing reveal, without hiding readable content or moving cards. */
+  .motion-ready [data-reveal]:not(.project) {
+    opacity: 0.85;
+    transition: opacity var(--motion-detail) var(--motion-ease);
+  }
 
-.js [data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
+  .motion-ready [data-reveal].is-visible {
+    opacity: 1;
+  }
 }

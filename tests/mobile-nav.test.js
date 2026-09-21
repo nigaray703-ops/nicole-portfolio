@@ -34,6 +34,18 @@ describe("mobile navigation", () => {
     expect(nav.dataset.open).toBe("false");
   });
 
+  it("keeps navigation usable when visibility observation cannot initialise", () => {
+    cleanup();
+    cleanup = initMobileNav(document, class {
+      constructor() { throw new Error("Observer unavailable"); }
+    });
+    const toggle = document.querySelector(".nav-toggle");
+    toggle.click();
+    expect(toggle.getAttribute("aria-expanded")).toBe("true");
+    document.querySelector("nav a").click();
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+  });
+
   it("closes after a navigation link is selected", () => {
     const toggle = document.querySelector(".nav-toggle");
     toggle.click();

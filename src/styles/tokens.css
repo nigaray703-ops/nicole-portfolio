@@ -20,4 +20,7 @@
   --radius-small: 0.5rem;
   --radius-medium: 0.875rem;
   --shadow-glow: 0 1.5rem 5rem rgba(42, 117, 151, 0.16);
+  --motion-feedback: 180ms;
+  --motion-detail: 220ms;
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }

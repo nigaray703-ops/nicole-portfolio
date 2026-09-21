@@ -92,6 +92,17 @@
   transform: translateY(-50%) rotate(45deg);
 }
 
+.dataset-flow__steps li:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: calc(-1rem - 1px);
+  width: 1rem;
+  height: 1px;
+  background: var(--color-mint-strong);
+  transform-origin: left center;
+}
+
 .dataset-flow__output {
   font-size: clamp(0.95rem, 1.8vw, 1.25rem);
   font-weight: 650;
@@ -133,28 +144,38 @@
   }
 
   .project-preview__media img {
-    transition: scale 280ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition: scale var(--motion-detail) var(--motion-ease);
   }
 
   [data-case-trigger]::after {
-    transition: transform 180ms ease;
+    transition: transform var(--motion-feedback) var(--motion-ease);
   }
 
   .project--expanded [data-case-panel] {
-    animation: case-arrive 220ms ease-out;
+    animation: case-arrive var(--motion-detail) var(--motion-ease);
   }
+
+  /* Nodes and text never hide. Only decorative connectors wait for the viewport. */
+  .flow-ready:not(.flow-played) .dataset-flow__steps li::before {
+    transform: scaleX(0);
+  }
+
+  .flow-played .dataset-flow__steps li {
+    animation: flow-node 300ms var(--motion-ease) both;
+  }
+
+  .flow-played .dataset-flow__steps li:nth-child(2) { animation-delay: 300ms; }
+  .flow-played .dataset-flow__steps li:nth-child(3) { animation-delay: 600ms; }
+
+  .flow-played .dataset-flow__steps li:not(:last-child)::before {
+    animation: flow-connect 300ms var(--motion-ease) 150ms both;
+  }
+
+  .flow-played .dataset-flow__steps li:nth-child(2)::before { animation-delay: 450ms; }
 
   @media (hover: hover) and (pointer: fine) {
     .project:hover .project-preview__media img {
       scale: 1.025;
-    }
-
-    [data-case-trigger]:hover::after {
-      transform: translateX(0.2rem) rotate(45deg);
-    }
-
-    [data-case-trigger][aria-expanded="true"]:hover::after {
-      transform: rotate(135deg);
     }
   }
 }
@@ -170,8 +191,18 @@
 }
 
 @keyframes case-arrive {
-  from { opacity: 0.7; transform: translateY(0.35rem); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: none; }
+}
+
+@keyframes flow-connect {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes flow-node {
+  0%, 100% { border-color: #9fcbd6; background-color: #fff; }
+  45% { border-color: var(--color-mint-strong); background-color: #eaf7f3; }
 }
 
 @media (max-width: 680px) {
