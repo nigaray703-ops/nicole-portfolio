@@ -28,6 +28,20 @@ It presents:
 
 Only verified project information is included. The site does not use invented metrics, testimonials, links, or outcomes.
 
+## Review the work
+
+Start with the [live portfolio](https://nicole-portfolio-ashen.vercel.app), then open the selected case studies for project context and approved public evidence.
+
+For a working application example, visit [Career Command Center](https://github.com/nigaray703-ops/career-command-demo): its README includes interface screenshots, architecture, fictional-data boundaries, and local preview instructions. The [Ana Tilim learning project](https://github.com/nigaray703-ops/ana-tilim) separately documents language-learning flows, right-to-left text support, human audio, and optional cloud synchronization.
+
+These related repositories provide implementation evidence; they do not imply commercial adoption, measured business outcomes, or production readiness.
+
+## Verification evidence
+
+The repository contains automated checks for case-study interactions, mobile navigation, motion, portrait fallback, and content/privacy rules. Run `pnpm test` and `pnpm build` using the commands below to verify the checkout you are reviewing.
+
+Automated checks support regression review; they do not replace manual keyboard, mobile, or accessibility testing. A documented command is not a claim that the latest deployment has passed it.
+
 ## Technology
 
 - Semantic HTML
