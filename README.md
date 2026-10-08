@@ -14,19 +14,18 @@ It presents:
 
 - Professional summary and current career focus
 - Business analysis, product, operations, and reporting capabilities
-- Experience in requirements, workflows, testing, stakeholder communication, and digital delivery
+- Experience in requirements, workflows, manual product review, stakeholder communication, and academic teamwork
 - Selected case studies and project evidence
 - Public education, language, contact, and résumé information
 
 ## Selected work
 
 - Career Command Center
-- Nicole Universe
-- Ko ahau te awa
-- PawPal Health
-- Tēnei Tērā
+- Ko ahau te awa academic internship
+- Harry Potter Knowledge Assistant academic project
+- Ana Tilim / Uyghur Tili
 
-Only verified project information is included. The site does not use invented metrics, testimonials, links, or outcomes.
+Personal project code implementation and automated checks are supported by Codex. Nicole defines ideas, requirements and interface direction, identifies issues, requests corrections and reviews results. Academic team contributions are described separately. Only verified project information is included. The site does not use invented metrics, testimonials, links, or outcomes.
 
 ## Review the work
 

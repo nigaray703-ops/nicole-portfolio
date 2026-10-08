@@ -169,7 +169,10 @@ describe("public portfolio contract", () => {
     const educationText = document.querySelector("#education").textContent;
 
     expect(experienceItems).toHaveLength(2);
-    expect(experienceText).toContain("AI Expert – Uyghur");
+    expect(experienceText).toContain("Uyghur Speech Data Contributor");
+    expect(experienceText).toContain("transcription quality-control tasks");
+    expect(experienceText).not.toContain("AI-generated content");
+    expect(document.querySelector("#leadership").textContent).not.toMatch(/100\+|30\+/);
     expect(experienceText).toContain("LILT · Independent contractor · Remote");
     expect(experienceText).not.toContain("AI-88");
     expect(document.querySelector("#education-title").textContent.trim()).toBe("Education");

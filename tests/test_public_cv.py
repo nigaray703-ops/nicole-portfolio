@@ -20,19 +20,20 @@ class PublicCvContractTest(unittest.TestCase):
             "Career Command Center",
             "Ana Tilim",
             "Harry Potter Knowledge Assistant",
-            "16,245 rows",
-            "464 interface states",
+            "Codex supports code implementation",
+            "transcription and quality-control tasks",
         ):
             self.assertIn(expected, self.text)
 
     def test_uses_current_academic_and_internship_facts(self):
-        self.assertIn("Approximately 400 hours", self.text)
+        self.assertIn("approximately 400 hours", self.text)
         self.assertNotIn("400+ hours", self.text)
         self.assertNotIn("Academic English", self.text)
         self.assertNotIn("Levels 7 and 8", self.text)
         if "PawPal Health" in self.text:
-            self.assertIn("ENGME585", self.text)
-            self.assertNotIn("COMPX500", self.text)
+            self.assertIn("COMPX500", self.text)
+        for unsupported in ("100+", "30+", "464 interface states", "AI Expert", "Implemented Google authentication"):
+            self.assertNotIn(unsupported, self.text)
         self.assertNotIn("MNMGT544", self.text)
         self.assertNotIn("MNNGT544", self.text)
 
