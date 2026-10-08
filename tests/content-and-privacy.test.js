@@ -47,8 +47,8 @@ function contrastRatio(first, second) {
 describe("public portfolio contract", () => {
   it("contains the approved public identity and role", () => {
     expect(html).toContain("Nicole Nikareayi");
-    expect(html).toContain("Graduate Business Analyst for");
-    expect(html).toContain("systems, data &amp; implementation.");
+    expect(html).toContain("Technology Innovation Graduate.");
+    expect(html).toContain("Focused on business systems.");
     expect(html).toContain("Auckland, New Zealand");
     expect(html).toContain("nigaray703@gmail.com");
     expect(html).toContain("linkedin.com/in/nikareayi-aisikaer");
@@ -68,7 +68,7 @@ describe("public portfolio contract", () => {
     expect(cvLink.textContent.trim()).toBe("Download CV");
   });
 
-  it("presents the four Master CV-backed primary case studies", () => {
+  it("preserves the four reviewed primary case studies", () => {
     const document = new JSDOM(html).window.document;
     const titles = [...document.querySelectorAll("#work .project > h3")].map(
       (heading) => heading.textContent.trim(),
@@ -97,13 +97,13 @@ describe("public portfolio contract", () => {
       "Ana Tilim / Uyghur Tili",
     );
     expect(project.querySelector(".project__meta").textContent.trim()).toBe(
-      "Personal project · Jul 2026–Present · JavaScript",
+      "Personal project · Jul 2026–Present · AI-assisted implementation",
     );
-    expect(projectCopy).toContain("two-edition, mobile-first Uyghur language learning platform");
+    expect(projectCopy).toContain("two-edition Uyghur learning platform");
     expect(projectCopy).toContain("phones, tablets and desktop computers");
-    expect(projectCopy).toContain("12-unit global curriculum and an 11-unit China edition");
-    expect(projectCopy).toContain("Tencent CloudBase");
-    expect(projectCopy).toContain("UID-scoped Supabase sync");
+    expect(projectCopy).toContain("one product family");
+    expect(projectCopy).toContain("Content preparation and review are ongoing");
+    expect(projectCopy).not.toMatch(/12-unit|11-unit|Released two live editions/);
     expect(projectCopy).not.toContain("464 interface states");
     expect(links).toEqual([
       { href: "https://ana-tilim.vercel.app/", label: "Global edition" },
@@ -116,7 +116,7 @@ describe("public portfolio contract", () => {
     ]);
 
     expect(document.querySelector("#capabilities").textContent).toContain(
-      "Ana Tilim / Uyghur Tili dual-edition verification",
+      "Ana Tilim / Uyghur Tili content and interface review",
     );
   });
 
@@ -186,23 +186,27 @@ describe("public portfolio contract", () => {
   it("contains current recruiter-facing project context", () => {
     [
       "Academic internship · A+ · Approximately 400 hours · Nov 2025–Feb 2026 · Wix",
-      "Personal project · Jun 2026–Present · JavaScript · Supabase",
-      "COMPX500 · A+ · Aug–Sep 2025 · Python · Pandas",
-      "Personal project · Jul 2026–Present · JavaScript",
+      "Personal project · Jun 2026–Present · AI-assisted implementation",
+      "COMPX500 Project 1 · A+ · Aug–Sep 2025 · AI application study",
+      "Personal project · Jul 2026–Present · AI-assisted implementation",
     ].forEach((metadata) => expect(html).toContain(metadata));
   });
 
   it("uses scoped internship ownership and duration", () => {
     expect(html).toContain("student-led");
     expect(html).toContain("approximately 400 hours");
-    expect(html).toContain("Owned the puzzle interaction");
+    const document = new JSDOM(html).window.document;
+    const internship = document.querySelector("#case-internship").textContent;
+    expect(internship).toContain("Designed and iterated the puzzle interaction");
+    expect(internship).toContain("processed and embedded narration audio");
+    expect(internship).toContain("Teammates were responsible for the map and main story");
     expect(html).not.toContain("400+ hours");
   });
 
   it("uses current evidence without conflicting course codes", () => {
     expect(html).toContain("16,245 rows");
     expect(html).not.toContain("464 interface states");
-    expect(html).toContain("COMPX500 · A+");
+    expect(html).toContain("COMPX500 Project 1 · A+");
     expect(html).not.toContain("MNNGT544");
     expect(html).not.toContain("MNMGT544");
   });
@@ -227,15 +231,48 @@ describe("public portfolio contract", () => {
     ]);
   });
 
-  it("includes Business Analyst and Office evidence", () => {
+  it("describes contribution-backed requirements and review capabilities", () => {
     const publicCopy = html.toLowerCase();
     [
-      "user stories",
-      "functional specification support",
-      "pivot tables",
-      "powerpoint",
-      "requirements documentation",
+      "product requirements",
+      "status rules",
+      "expected behaviour",
+      "manual acceptance checks",
+      "contributing to presentations",
     ].forEach((term) => expect(publicCopy).toContain(term));
+  });
+
+  it("distinguishes personal product contributions from Codex implementation", () => {
+    const document = new JSDOM(html).window.document;
+    for (const id of ["case-career-command", "case-ana-tilim"]) {
+      const copy = document.getElementById(id).textContent;
+      expect(copy).toContain("Code is implemented primarily by Codex");
+      expect(copy).toContain("My Role");
+      expect(copy).toContain("manual acceptance checks");
+      expect(copy).not.toMatch(/then built and tested|implemented learning interactions|Built shared/);
+    }
+    expect(document.querySelector("#about").textContent).toContain("including this portfolio");
+    expect(document.querySelector("#about").textContent).toContain("Academic and team contributions are described separately");
+  });
+
+  it("scopes academic AI evidence to data rows and qualitative observations", () => {
+    const document = new JSDOM(html).window.document;
+    const copy = document.getElementById("case-harry-potter").textContent;
+    expect(copy).toContain("16,245 rows of data, not 16,245 independently verified facts");
+    expect(copy).toContain("qualitative observations rather than a measured accuracy improvement");
+    expect(copy).toContain("not model training or a production-grade retrieval system");
+    expect(copy).toContain("not evidence that I independently wrote every part of its code");
+  });
+
+  it("does not equate project automated tests with personal engineering skills", () => {
+    const document = new JSDOM(html).window.document;
+    const copy = document.querySelector("#capabilities").textContent;
+    expect(copy).toContain("Manual Review & Continuous Improvement");
+    expect(copy).not.toMatch(/automated (?:checks|tests)|test automation|Nigar Kiz tests/i);
+    const skills = [...document.querySelectorAll("[data-case-panel] h4")]
+      .filter((heading) => heading.textContent === "Skills Applied")
+      .map((heading) => heading.nextElementSibling.textContent).join(" ");
+    expect(skills).not.toMatch(/JavaScript|Python|Pandas|Supabase|test automation/);
   });
 
   it("uses the accepted section labels and Capabilities supporting copy", () => {
